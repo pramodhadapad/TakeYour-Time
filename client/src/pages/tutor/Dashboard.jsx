@@ -147,7 +147,7 @@ export default function TutorDashboard() {
       setClassForm({ title: '', type: 'solo', durationMinutes: 60, price: 50, mode: 'online', currency: 'INR', maxCapacity: 1 });
       loadData();
     } catch (err) {
-      addToast({ type: 'error', message: err.response?.data?.error || 'Failed to save class.' });
+      addToast({ type: 'error', message: err.response?.data?.error || err.message || 'Failed to save class.' });
     }
   };
 
@@ -168,22 +168,30 @@ export default function TutorDashboard() {
   const handleCreateSlot = async (e) => {
     e.preventDefault();
     try {
+      if (!slotForm.sessionId) return addToast({ type: 'error', message: 'Please select a class first.' });
+
       const startDateTime = new Date(`${slotForm.date}T${slotForm.startTime}:00`);
-      const endDateTime = new Date(`${slotForm.date}T${slotForm.endTime}:00`);
+      let endDateTime = new Date(`${slotForm.date}T${slotForm.endTime}:00`);
+      
+      // Handle slots spanning past midnight
+      if (endDateTime <= startDateTime) {
+        endDateTime.setDate(endDateTime.getDate() + 1);
+      }
       
       const payload = {
         sessionId: slotForm.sessionId,
         startTime: startDateTime.toISOString(),
         endTime: endDateTime.toISOString(),
-        capacity: slotForm.capacity
+        capacity: slotForm.capacity || 1
       };
 
       await slotService.createSlot(payload);
       addToast({ type: 'success', message: 'Slot created successfully.' });
       setShowSlotModal(false);
+      setSlotForm({ sessionId: '', date: '', startTime: '', endTime: '', capacity: 1 });
       loadData();
     } catch (err) {
-      addToast({ type: 'error', message: err.response?.data?.error || 'Failed to create slot.' });
+      addToast({ type: 'error', message: err.response?.data?.error || err.message || 'Failed to create slot.' });
     }
   };
 
@@ -599,11 +607,11 @@ export default function TutorDashboard() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-primary mb-2">Duration (min)</label>
-                  <input type="number" required className="w-full bg-surface-container rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400/50 transition-all font-medium border border-transparent shadow-inner" value={classForm.durationMinutes} onChange={e => setClassForm({...classForm, durationMinutes: parseInt(e.target.value)})} />
+                  <input type="number" required className="w-full bg-surface-container rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400/50 transition-all font-medium border border-transparent shadow-inner" value={classForm.durationMinutes} onChange={e => setClassForm({...classForm, durationMinutes: parseInt(e.target.value) || 60})} />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-primary mb-2">Price</label>
-                  <input type="number" required className="w-full bg-surface-container rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400/50 transition-all font-medium border border-transparent shadow-inner" value={classForm.price} onChange={e => setClassForm({...classForm, price: parseFloat(e.target.value)})} />
+                  <input type="number" required className="w-full bg-surface-container rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400/50 transition-all font-medium border border-transparent shadow-inner" value={classForm.price} onChange={e => setClassForm({...classForm, price: parseFloat(e.target.value) || 0})} />
                 </div>
               </div>
               <div>
@@ -618,7 +626,7 @@ export default function TutorDashboard() {
               {classForm.type === 'group' && (
                 <div>
                   <label className="block text-sm font-bold text-primary mb-2">Max Capacity</label>
-                  <input type="number" min="2" className="w-full bg-surface-container rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400/50 transition-all font-medium border border-transparent shadow-inner" value={classForm.maxCapacity} onChange={e => setClassForm({...classForm, maxCapacity: parseInt(e.target.value)})} />
+                  <input type="number" min="1" className="w-full bg-surface-container rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400/50 transition-all font-medium border border-transparent shadow-inner" value={classForm.maxCapacity} onChange={e => setClassForm({...classForm, maxCapacity: parseInt(e.target.value) || 1})} />
                 </div>
               )}
               <div className="pt-4">
@@ -668,7 +676,7 @@ export default function TutorDashboard() {
               </div>
               <div>
                 <label className="block text-sm font-bold text-primary mb-2">Capacity for this slot</label>
-                <input required type="number" min="1" className="w-full bg-surface-container rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400/50 transition-all font-medium border border-transparent shadow-inner" value={slotForm.capacity} onChange={e => setSlotForm({...slotForm, capacity: parseInt(e.target.value)})} />
+                <input required type="number" min="1" className="w-full bg-surface-container rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400/50 transition-all font-medium border border-transparent shadow-inner" value={slotForm.capacity} onChange={e => setSlotForm({...slotForm, capacity: parseInt(e.target.value) || 1})} />
               </div>
               <div className="pt-4">
                 <button type="submit" className="w-full py-4 bg-primary text-white font-bold rounded-2xl hover:bg-primary/90 transition-colors shadow-lg shadow-indigo-900/10">Publish Slot</button>

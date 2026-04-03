@@ -3,6 +3,16 @@
   <h1>Take Your Time</h1>
   <p><em>Premium Digital Curator: A High-End Tutor-Student Marketplace</em></p>
 
+  <!-- Production Links -->
+  <p>
+    <a href="https://take-yourtime.vercel.app" target="_blank">
+      <img src="https://img.shields.io/badge/Live_Front--end-Vercel-black?style=for-the-badge&logo=vercel" alt="Live Frontend" />
+    </a>
+    <a href="https://takeyour-time-1.onrender.com/health" target="_blank">
+      <img src="https://img.shields.io/badge/Live_Back--end-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Live Backend" />
+    </a>
+  </p>
+
   <!-- Badges -->
   <p>
     <img src="https://img.shields.io/badge/MERN_Stack-blue?style=for-the-badge&logo=mongodb" alt="MERN Stack" />
@@ -22,103 +32,69 @@ It bridges the gap between expert domain specialists and dedicated students thro
 ---
 
 ## 🏛️ The "Digital Curator" Design System
-The platform follows a strict architectural design philosophy defined in `DESIGN.md`:
+The platform follows a strict architectural design philosophy:
 - **Typography:** Headlines in **Epilogue** for a bold, executive feel; Body text in **Inter** for maximum readability.
-- **Aesthetics:** High-impact glass backgrounds (`.glass-card`), subtle micro-animations (Pulse, Float, Fade-in-up), and a curated palette of Deep Navy (`#000928`), Primary Blue (`#5382ff`), and Surface Tones.
+- **Aesthetics:** High-impact glass backgrounds (`.glass-card`), tonal surface hierarchy, and premium animation keyframes (Pulse, Float, Fade-in-up).
 - **Layouts:** Executive bento-grids for dashboards and asymmetric columns for the landing experience.
+- **Color Palette:** Deep Navy (`#000928`), Primary Blue (`#5382ff`), and Surface Tones.
 
 ---
 
-## 🛠️ Technology Stack & Integrations
+## 🛠️ Comprehensive Technology Stack
 
-### Frontend
+### Core Frontend
 - **Framework:** React 19 (Vite)
-- **Styling:** Tailwind CSS 4.0 (CSS-first configuration)
-- **State Management:** [Zustand](https://github.com/pmndrs/zustand) (Atomic & Fast)
-- **Icons:** Lucide React & Google Material Symbols
-- **Components:** Custom premium glassmorphism components & Radix UI primitives
+- **Styling:** Tailwind CSS 4.0 (CSS-first configuration with custom tokens)
+- **State Management:** [Zustand](https://github.com/pmndrs/zustand) (Atomic & High-performance)
+- **Routing:** React Router DOM v7
+- **UI Components:** Premium custom glassmorphism components with Radix UI primitives.
+- **Icons:** Lucide React & Google Material Symbols.
 
-### Backend
-- **Platform:** Node.js & Express.js
-- **Database:** MongoDB Atlas with Mongoose ODM
-- **Real-time:** Socket.io (Configurable for live updates)
-- **Security:** Passport.js (Google OAuth 2.0), JWT (Access/Refresh rotation), Helmet.js, Express-Rate-Limit
-
-### Core Integrations
-| Service | Purpose |
-| :--- | :--- |
-| **Google Cloud** | OAuth 2.0 Authentication & Identity Management |
-| **Razorpay** | Secure Payment Gateway for session investments |
-| **Resend** | Premium Transactional Email delivery (Confirmations/Reminders) |
-| **Sentry** | Full-stack Error Tracking & Performance Monitoring |
-| **Twilio** | SMS & WhatsApp notifications for instant booking alerts |
-| **Vercel** | Production Edge Deployment & CI/CD |
+### Core Backend
+- **Runtime:** Node.js & Express.js
+- **Database:** MongoDB Atlas with Mongoose ODM (Optimization for slot availability queries).
+- **Authentication:** Passport.js (Google OAuth 2.0 implementation with redirect state management).
+- **Security:** JWT (Access/Refresh token rotation), Helmet.js, Express-Rate-Limit, CORS (Secure credentials handling).
 
 ---
 
-## ✨ Key Features
+## 🔗 Integrated Services & API Plugins
+
+| Service | Category | Purpose |
+| :--- | :--- | :--- |
+| **Google Cloud** | Identity | OAuth 2.0 Social Login & Identity Verification |
+| **Razorpay** | Payments | Seamless checkout for paid session investments |
+| **Resend** | Email | Premium Transactional Email (Booking confirmations/reminders) |
+| **Twilio** | SMS/WhatsApp | Automated instant notifications for real-time alerts |
+| **Sentry** | Observability | Full-stack performance tracking and error reporting |
+| **Vercel** | CI/CD | Frontend hosting with edge performance |
+| **Render** | CI/CD | Backend Node.js service hosting |
+
+---
+
+## ✨ Key Features & Business Logic
 - **🛡️ Secure Booking Flow:** Intelligent conflict detection and multi-step session confirmation.
+- **📧 Smart Notifications:** Booking emails are automatically triggered only after successful payment verification.
 - **📊 Executive Dashboards:** 
-  - **Tutors:** Revenue analytics, KPI bento-grids, and interactive schedule management.
-  - **Students:** Unified booking timeline, tutor discovery, and review systems.
-- **💳 Payment Integration:** One-click Razorpay checkout with instant payment verification.
-- **📧 Automated Notifications:** Seamless email and SMS alerts via Resend and Twilio.
-- **🔄 Session Redirects:** Smart auth-redirects that return you to your booking flow after login.
+  - **Tutors:** Revenue analytics, bento-grid stats, and interactive availability management.
+  - **Students:** Unified booking timeline, glass-card tutor discovery, and profile management.
+- **🔄 Session Resilience:** Auth-redirect logic that preserves your booking path after login.
+- **🌙 Midnight Support:** Full support for availability slots spanning past midnight (e.g., 11:30 PM - 1:30 AM).
 
 ---
 
 ## ⚙️ Local Development Setup
 
-### 1. Requirements
-- Node.js (v18+)
-- MongoDB (Local or Atlas)
-- API Keys for Google, Razorpay, Resend, and Twilio
-
-### 2. Installation
+### 1. Installation
 ```bash
-# Clone the vision
 git clone https://github.com/pramodhadapad/TakeYour-Time.git
 cd TakeYour-Time
-
-# Install Backend
 cd server && npm install
-
-# Install Frontend
 cd ../client && npm install
 ```
 
-### 3. Environment Config
-Create `.env` files in both directories following the provided templates.
-
-**Server (`server/.env`):**
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://...
-JWT_SECRET=your_secret
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-RAZORPAY_KEY_ID=...
-RESEND_API_KEY=...
-TWILIO_ACCOUNT_SID=...
-```
-
-### 4. Launch
-```bash
-# Start concurrently or in separate terminals
-# Backend (Server)
-npm run dev
-
-# Frontend (Client)
-npm run dev
-```
-
----
-
-## 🚀 Deployment
-Optimal deployment strategy:
-- **Frontend:** Vercel (Edge Functions)
-- **Backend:** Render or AWS (Node service)
-- **Database:** MongoDB Atlas
+### 2. Environment Variables
+Ensure both `.env` files are configured based on the templates in `server/` and `client/`.
 
 ---
 

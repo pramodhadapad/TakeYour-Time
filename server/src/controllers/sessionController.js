@@ -14,7 +14,13 @@ const createSession = async (req, res, next) => {
   try {
     const session = await Session.create({ ...req.body, tutorId: req.user._id });
     res.status(201).json({ success: true, data: session });
-  } catch (err) { next(err); }
+  } catch (err) { 
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message);
+      return res.status(400).json({ success: false, error: messages[0] });
+    }
+    next(err); 
+  }
 };
 
 // Tutor: Update session type
@@ -25,9 +31,17 @@ const updateSession = async (req, res, next) => {
       req.body,
       { new: true, runValidators: true }
     );
-    if (!session) return res.status(404).json({ success: false, error: 'Session not found' });
-    res.json({ success: true, data: session });
-  } catch (err) { next(err); }
+    if (!session) {
+      return res.status(404).json({ success: false, error: 'Session not found' });
+    }
+    res.status(200).json({ success: true, data: session });
+  } catch (err) { 
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message);
+      return res.status(400).json({ success: false, error: messages[0] });
+    }
+    next(err); 
+  }
 };
 
 // Tutor: Deactivate session

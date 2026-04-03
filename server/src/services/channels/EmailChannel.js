@@ -16,19 +16,32 @@ class EmailChannel {
 
   async send(to, subject, body) {
     if (!this.resend) {
-      console.log(`[Mock Email] To: ${to} | Subject: ${subject}`);
+      console.log(`[Mock Email Sender] (Development Mode)
+        To: ${to}
+        Subject: ${subject}
+        Hint: To send real emails, provide a valid RESEND_API_KEY in server/.env`);
       return;
     }
 
     try {
-      await this.resend.emails.send({
-        from: process.env.EMAIL_FROM || 'Take Your Time <onboarding@resend.dev>',
+      const from = process.env.EMAIL_FROM || 'Take Your Time <onboarding@resend.dev>';
+      const result = await this.resend.emails.send({
+        from,
         to,
         subject,
         html: body
       });
+
+      if (result.error) {
+        throw new Error(result.error.message || 'Resend internal error');
+      }
+
+      console.log(`[Notification Service] Email sent successfully via Resend. To: ${to}, ID: ${result.data?.id}`);
     } catch (err) {
-      console.error('Email send failed:', err.message);
+      console.error(`[Notification Service Error] FAILED to send email to ${to}:`, err.message);
+      if (err.message.includes('onboarding@resend.dev')) {
+        console.warn(`[Notification Service Hint] You are using onboarding@resend.dev. Resend only allows sending to your own account email for testing unless you verify a domain.`);
+      }
     }
   }
 }

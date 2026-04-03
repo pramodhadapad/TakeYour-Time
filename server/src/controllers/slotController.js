@@ -11,6 +11,17 @@ const createSlot = async (req, res, next) => {
     }
 
     const { sessionId, startTime, endTime } = req.body;
+    
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      return res.status(400).json({ success: false, error: 'Invalid date/time format provided' });
+    }
+
+    if (end <= start) {
+      return res.status(400).json({ success: false, error: 'End time must be after start time' });
+    }
 
     // Verify session
     const session = await Session.findOne({ _id: sessionId, tutorId: req.user._id });
@@ -21,9 +32,9 @@ const createSlot = async (req, res, next) => {
     const slot = await AvailabilitySlot.create({
       tutorId: req.user._id,
       sessionId: session._id,
-      startTime,
-      endTime,
-      capacity: session.maxCapacity || 1,
+      startTime: start,
+      endTime: end,
+      capacity: req.body.capacity || session.maxCapacity || 1,
       bookedCount: 0
     });
 
