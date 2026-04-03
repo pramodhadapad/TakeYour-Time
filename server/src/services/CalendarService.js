@@ -13,7 +13,7 @@ class CalendarService {
     return oauth2Client;
   }
 
-  async addEvent(booking, session, user) {
+  async addEvent(booking, session, user, student = null) {
     if (!user.googleAccessToken) {
       console.log('[CalendarService] No Google token — skipping calendar sync.');
       return null;
@@ -39,14 +39,19 @@ class CalendarService {
           useDefault: false,
           overrides: [
             { method: 'popup', minutes: 60 },
-            { method: 'email', minutes: 1440 }
+            { method: 'email', minutes: 60 }
           ]
         }
       };
 
+      if (student && student.email) {
+        event.attendees = [{ email: student.email }];
+      }
+
       const created = await calendar.events.insert({
         calendarId: 'primary',
-        resource: event
+        resource: event,
+        sendUpdates: (student && student.email) ? 'all' : 'none'
       });
 
       return created.data.id;

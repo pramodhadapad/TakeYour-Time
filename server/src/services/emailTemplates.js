@@ -41,7 +41,7 @@ const bookingConfirmationStudent = ({ studentName, tutorName, tutorEmail, sessio
               <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);margin:0 auto 16px;line-height:64px;font-size:32px;">
                 ✓
               </div>
-              <h2 style="margin:0;color:#1e293b;font-size:22px;font-weight:700;">Booking Confirmed!</h2>
+              <h2 style="margin:0;color:#1e293b;font-size:22px;font-weight:700;">Your slot has been booked!</h2>
               <p style="margin:8px 0 0;color:#64748b;font-size:15px;">
                 Hi ${studentName}, your session has been successfully booked.
               </p>
@@ -109,6 +109,17 @@ const bookingConfirmationStudent = ({ studentName, tutorName, tutorEmail, sessio
                   </td>
                 </tr>
               </table>
+            </td>
+          </tr>
+
+          <!-- About Take Your Time -->
+          <tr>
+            <td style="padding:0 40px 24px;">
+              <div style="background-color:#f1f5f9;border-radius:12px;padding:16px 20px;">
+                <p style="margin:0;color:#334155;font-size:13px;line-height:1.6;">
+                  <strong style="color:#0f172a;">About Take Your Time:</strong> We are a dedicated platform designed to connect passionate learners with expert tutors for meaningful and personalized educational experiences. Thank you for choosing us for your learning journey!
+                </p>
+              </div>
             </td>
           </tr>
 

@@ -14,23 +14,31 @@ class EmailChannel {
     }
   }
 
-  async send(to, subject, body) {
+  async send(to, subject, body, options = {}) {
     if (!this.resend) {
       console.log(`[Mock Email Sender] (Development Mode)
         To: ${to}
         Subject: ${subject}
+        From: ${options.from || 'default'}
+        Reply-To: ${options.reply_to || 'default'}
         Hint: To send real emails, provide a valid RESEND_API_KEY in server/.env`);
       return;
     }
 
     try {
-      const from = process.env.EMAIL_FROM || 'Take Your Time <onboarding@resend.dev>';
-      const result = await this.resend.emails.send({
+      const from = options.from || process.env.EMAIL_FROM || 'Take Your Time <onboarding@resend.dev>';
+      const payload = {
         from,
         to,
         subject,
         html: body
-      });
+      };
+      
+      if (options.reply_to) {
+        payload.reply_to = options.reply_to;
+      }
+
+      const result = await this.resend.emails.send(payload);
 
       if (result.error) {
         throw new Error(result.error.message || 'Resend internal error');

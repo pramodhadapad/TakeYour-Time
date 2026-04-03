@@ -92,9 +92,12 @@ class BookingService {
       });
     }
 
+    // Fetch student data
+    const student = await User.findById(studentId);
+
     // Calendar sync (non-blocking — don't fail the booking if this errors)
     try {
-      const calEventId = await calendarService.addEvent(booking, session, tutor);
+      const calEventId = await calendarService.addEvent(booking, session, tutor, student);
       if (calEventId) {
         booking.googleCalEventId = calEventId;
         await booking.save();
@@ -104,7 +107,6 @@ class BookingService {
     }
 
     // Send professional confirmation emails to both student and tutor
-    const student = await User.findById(studentId);
     const { bookingConfirmationStudent, bookingNotificationTutor } = require('./emailTemplates');
 
     const emailData = {
@@ -123,7 +125,12 @@ class BookingService {
     };
 
     // Email to STUDENT — Booking Confirmation
-    notificationService.notify(student, '✅ Booking Confirmed — ' + session.title, bookingConfirmationStudent(emailData));
+    notificationService.notify(
+      student, 
+      '✅ Your slot has been booked: ' + session.title, 
+      bookingConfirmationStudent(emailData),
+      { reply_to: tutor.email }
+    );
 
     // Email to TUTOR — New Booking Alert
     notificationService.notify(tutor, '📚 New Booking from ' + student.name, bookingNotificationTutor(emailData));

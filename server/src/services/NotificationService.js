@@ -6,7 +6,7 @@ class NotificationService {
     this.channels = channels;
   }
 
-  async notify(user, subject, body) {
+  async notify(user, subject, body, options = {}) {
     if (!user) return;
     
     // We expect user object to potentially have email or phone depending on needed notifications
@@ -14,7 +14,7 @@ class NotificationService {
 
     for (const channel of this.channels) {
       if (channel instanceof EmailChannel && user.email) {
-        promises.push(channel.send(user.email, subject, body));
+        promises.push(channel.send(user.email, subject, body, options));
       } else if (channel instanceof WhatsAppChannel && user.phone) {
         promises.push(channel.send(user.phone, subject, body));
       }
