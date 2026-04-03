@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import useAuthStore from './store/authStore';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
@@ -56,9 +56,13 @@ function App() {
         } />
 
         {/* Admin Protected */}
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="/admin/dashboard" element={
           <ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>
         } />
+        
+        {/* Catch-all 404 redirect */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <ToastContainer />
     </Router>
