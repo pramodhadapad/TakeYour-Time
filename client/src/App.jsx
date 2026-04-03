@@ -17,7 +17,6 @@ import ToastContainer from './components/shared/ToastContainer';
 
 function App() {
   const { fetchUser, token } = useAuthStore();
-  const [introGone, setIntroGone] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -25,33 +24,8 @@ function App() {
     }
   }, [token, fetchUser]);
 
-  /* Global Splash Screen Timer */
-  useEffect(() => {
-    const timer = setTimeout(() => setIntroGone(true), 1200);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <>
-      {/* ─── GLOBAL INTRO SPLASH ─── */}
-      <div
-        className="intro-splash"
-        style={{
-          position: 'fixed', inset: 0, zIndex: 99999,
-          background: '#1a1a1a',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          opacity: introGone ? 0 : 1,
-          pointerEvents: introGone ? 'none' : 'all',
-          transition: 'opacity 1s ease',
-        }}
-      >
-        <img
-          src="/images/intropage.webp"
-          alt="Take Your Time"
-          style={{ maxWidth: '70%', maxHeight: '70vh', objectFit: 'contain' }}
-        />
-      </div>
-
       <Router>
       <Routes>
         {/* Public */}
