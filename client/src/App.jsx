@@ -13,6 +13,7 @@ import AdminDashboard from './pages/admin/Dashboard';
 import TermsOfService from './pages/TermsOfService';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ProtectedRoute from './components/shared/ProtectedRoute';
+import GuestRoute from './components/shared/GuestRoute';
 import ToastContainer from './components/shared/ToastContainer';
 
 function App() {
