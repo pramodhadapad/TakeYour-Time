@@ -10,7 +10,7 @@ export default function Login() {
   const { user } = useAuthStore();
 
   useEffect(() => {
-    if (user && user.role !== 'admin') {
+    if (user && user.role) {
       const dashboardMap = {
         tutor: '/tutor/dashboard',
         student: '/student/dashboard',
