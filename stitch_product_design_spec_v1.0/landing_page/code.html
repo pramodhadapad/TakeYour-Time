@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Take Your Time | Premium Tutor Booking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-primary": "#b4c5ff",
+              "secondary": "#712ae2",
+              "inverse-surface": "#283044",
+              "on-tertiary-fixed-variant": "#005320",
+              "on-error-container": "#93000a",
+              "secondary-fixed": "#eaddff",
+              "surface-container-low": "#f2f3ff",
+              "secondary-container": "#8a4cfc",
+              "outline": "#737686",
+              "surface-bright": "#faf8ff",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "on-surface-variant": "#434655",
+              "tertiary-container": "#007f36",
+              "surface-container": "#eaedff",
+              "surface-tint": "#0053db",
+              "tertiary-fixed-dim": "#62df7d",
+              "on-secondary": "#ffffff",
+              "on-surface": "#131b2e",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e2e7ff",
+              "on-secondary-container": "#fffbff",
+              "surface-container-lowest": "#ffffff",
+              "surface-variant": "#dae2fd",
+              "on-tertiary-fixed": "#002109",
+              "inverse-on-surface": "#eef0ff",
+              "background": "#faf8ff",
+              "tertiary-fixed": "#7ffc97",
+              "surface-container-highest": "#dae2fd",
+              "on-secondary-fixed": "#25005a",
+              "primary-fixed": "#dbe1ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-background": "#131b2e",
+              "primary": "#004ac6",
+              "secondary-fixed-dim": "#d2bbff",
+              "tertiary": "#006329",
+              "primary-container": "#2563eb",
+              "on-tertiary": "#ffffff",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-primary-container": "#eeefff",
+              "surface": "#faf8ff",
+              "on-primary-fixed": "#00174b",
+              "surface-dim": "#d2d9f4",
+              "on-secondary-fixed-variant": "#5a00c6",
+              "on-tertiary-container": "#c7ffca",
+              "on-error": "#ffffff",
+              "outline-variant": "#c3c6d7"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf8ff; color: #131b2e; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .tonal-fluidity { background: linear-gradient(180deg, rgba(242, 243, 255, 0.5) 0%, rgba(250, 248, 255, 1) 100%); }
+        .ghost-border { outline: 1px solid rgba(195, 198, 215, 0.2); }
+    </style>
+</head>
+<body class="bg-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-[0px_20px_40px_rgba(15,23,42,0.06)]">
+<div class="flex justify-between items-center px-12 py-6 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-slate-900 dark:text-slate-50">Take Your Time</span>
+<div class="hidden md:flex gap-6">
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 font-inter label-md uppercase tracking-wider text-[0.75rem] transition-all duration-300" href="#">Find Tutors</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 font-inter label-md uppercase tracking-wider text-[0.75rem] transition-all duration-300" href="#">How It Works</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 font-inter label-md uppercase tracking-wider text-[0.75rem] transition-all duration-300" href="#">Session Types</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 font-inter label-md uppercase tracking-wider text-[0.75rem] transition-all duration-300" href="#">Reviews</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="transition-all duration-300 hover:opacity-80 scale-95 active:scale-90 transition-transform bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-semibold text-sm">Sign In</button>
+</div>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="relative overflow-hidden px-12 py-20 max-w-[1440px] mx-auto lg:flex items-center gap-16 min-h-[819px]">
+<div class="lg:w-1/2 z-10">
+<h1 class="text-[3.5rem] font-bold leading-tight tracking-tight text-on-surface mb-6">
+                    Tutor more, <br/><span class="text-primary">manage less.</span>
+</h1>
+<p class="text-[1.125rem] text-on-surface-variant mb-10 max-w-lg leading-relaxed">
+                    The premium booking tool built for professional educators. Elevate your teaching practice with a platform that handles the logistics so you can focus on the learning.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">View Available Sessions</button>
+<button class="bg-surface-container-high text-primary px-8 py-4 rounded-lg font-semibold hover:bg-surface-container-highest transition-all">Learn More</button>
+</div>
+</div>
+<div class="lg:w-1/2 mt-12 lg:mt-0 relative">
+<div class="absolute -top-10 -right-10 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl"></div>
+<div class="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+<img alt="Professional Educator" class="w-full h-[600px] object-cover" data-alt="Professional smiling woman tutor sitting in a brightly lit modern study space with books and a laptop, editorial photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8wh90co53i0uylVkliPZGQtHpIj52reRu15H4lQ3U5sLJXLd9EKk0Er2gGLoFc8-SJp94nA2BS-2TW95YQEN-MCxuDv-uRQuS4fqyOe-lggdSOKFuUa3R1VcsAgqQd65-a-QUznFfia673VM23zr7p7gja3ICgkYcPZutQ8bkHQdjm0N1KgwBWkwq6iZEwZbcZDwADHEnhnkhtYURldM3pzfLOe-IcvxMa4SfHop381XK5QFc_5VEFQ7cwNcx0r7-UUpOc31yu84"/>
+</div>
+<div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl max-w-xs border-l-4 border-primary">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold text-on-surface">Top Rated</span>
+</div>
+<p class="text-sm text-on-surface-variant">"The most intuitive booking system I've used in 10 years of private tutoring."</p>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="bg-surface-container-low py-32 px-12">
+<div class="max-w-[1440px] mx-auto">
+<div class="mb-20 text-center">
+<span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Process</span>
+<h2 class="text-[2rem] font-bold text-on-surface">How It Works</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Step 1 -->
+<div class="relative group">
+<div class="mb-8 w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="search">search</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-4">1. Browse</h3>
+<p class="text-on-surface-variant leading-relaxed">Explore our curated list of professional educators and pick a session that matches your learning goals.</p>
+<div class="hidden md:block absolute top-8 right-0 transform translate-x-1/2 opacity-20">
+<span class="material-symbols-outlined text-4xl" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative group">
+<div class="mb-8 w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="calendar_month">calendar_month</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-4">2. Book</h3>
+<p class="text-on-surface-variant leading-relaxed">Select a time slot that works for you. Our real-time availability sync ensures no double-bookings.</p>
+<div class="hidden md:block absolute top-8 right-0 transform translate-x-1/2 opacity-20">
+<span class="material-symbols-outlined text-4xl" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="group">
+<div class="mb-8 w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="video_chat">video_chat</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-4">3. Attend</h3>
+<p class="text-on-surface-variant leading-relaxed">Join your session via our high-definition video link. No extra software downloads required.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Session Types Section -->
+<section class="py-32 px-12 max-w-[1440px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div>
+<span class="text-secondary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Specializations</span>
+<h2 class="text-[2rem] font-bold text-on-surface">Curated Session Types</h2>
+</div>
+<a class="text-primary font-semibold flex items-center gap-2 hover:underline underline-offset-4" href="#">View All Sessions <span class="material-symbols-outlined">chevron_right</span></a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+<div class="h-48 overflow-hidden">
+<img alt="Math Tutoring" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of complex mathematical equations written on a blackboard with soft chalk textures and professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdKXOKJmBnwhCZsHU8I9Rg4pF76Z0EfAwt83YLbnRu-oWoW7w1rGZj54WaNGAbJ7JszrwR26nlOG5UEuleg8rQXVrg7oIAslmMo-2lehfkMqdIeoX3KOgUnJIyvB81H2TnbcI324kIbFmR2C_zJ1w8uXpBB1OTp_TzHq7rjaSMToHLgII3w0noc6EP35U9htE-3wSZilsKCxa3kr-NEMmiMoobvw2Vz8oBuTEl5wnzA3VdhusqX3vV4auiBZ_U-5S9TTqTNPLhYJ4"/>
+</div>
+<div class="p-8 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-lg font-bold text-on-surface">Math Tutoring</h3>
+<span class="bg-primary-fixed text-on-primary-fixed text-[0.65rem] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Individual</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Personalized 1-on-1 sessions covering Algebra, Calculus, and Statistics for all levels.</p>
+<div class="pt-6 border-t border-surface-container-high flex justify-between items-center">
+<span class="font-bold text-primary">$60/hr</span>
+<button class="text-primary font-semibold text-sm">Book Now</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+<div class="h-48 overflow-hidden">
+<img alt="Physics Group Class" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Conceptual physics visual with a glass prism refracting light into a rainbow spectrum on a clean white surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR1PxJfJBEgeg6rcSxgvBmjREQqStyLV3bOBte9WmHcWw3A0XgNayTM_Y4gjJNyMXMYedtM-Rpf_IF1gBmu4h3qN2RiSgTmpn-xwFZ2fhz40z5GUexADkgzrYYX0tZpnBkVrz5r8PWU5V36N0QSS2WCwCmncNUMsHaY4DupjP1jDY2kP735cTVpDskC74nlzFjxSuRIAlMD69fgJrCvR042ze6CRrJBgUBmOEkR-us9d1Z2-tFAMoZer-EbMf4XENyhBOqiQoU_h8"/>
+</div>
+<div class="p-8 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-lg font-bold text-on-surface">Physics Group Class</h3>
+<span class="bg-secondary-fixed text-on-secondary-fixed text-[0.65rem] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Group</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Interactive group environment focusing on mechanics, electromagnetism, and modern physics.</p>
+<div class="pt-6 border-t border-surface-container-high flex justify-between items-center">
+<span class="font-bold text-primary">$35/hr</span>
+<button class="text-primary font-semibold text-sm">Join Group</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+<div class="h-48 overflow-hidden">
+<img alt="SAT Prep" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Organized desk with pencils, notebooks, and an open textbook focusing on standardized testing, high-end editorial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0p7mnWuswzcvlbFsy2lHGs9-EaK4AmVt9FL7OLz0yRnXBF_htIw10AKEg0gnai_BlmgGj6fBo3zfvQhZ27MivZO9KAZ56VxmNeLP1cH2JxAPwQ9UjRaBYM0o_n63HxPDuZep3UXi_5h6lnEowLT57A_pYeMz8O0gqFp97vCF8m2i8mnsc2BVnSAfgbPgeLDeQQ-CrwEQHkVXqQPMEIPZqvFjKIcQH1INlRG8sf-UvCtyxurqReEAMU4iv5LASfV9BqlxOXI6pwMU"/>
+</div>
+<div class="p-8 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-lg font-bold text-on-surface">SAT Prep</h3>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[0.65rem] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Intensive</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 flex-grow">Strategic preparation for SAT/ACT exams including mock tests and deep-dive review sessions.</p>
+<div class="pt-6 border-t border-surface-container-high flex justify-between items-center">
+<span class="font-bold text-primary">$75/hr</span>
+<button class="text-primary font-semibold text-sm">Start Prep</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Reviews Section -->
+<section class="bg-surface-container-low py-32 px-12">
+<div class="max-w-[1440px] mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+<div class="lg:col-span-4">
+<h2 class="text-[2rem] font-bold text-on-surface mb-6">Trusted by the Intellectual Community</h2>
+<div class="flex items-center gap-4 mb-8">
+<div class="text-[3.5rem] font-extrabold text-primary leading-none">4.8</div>
+<div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0.5;">star_half</span>
+</div>
+<div class="text-on-surface-variant text-sm font-medium">from 23 verified reviews</div>
+</div>
+</div>
+<p class="text-on-surface-variant leading-relaxed">Our tutors are vetted for both expertise and teaching ability. We maintain a strict quality standard to ensure every session is productive.</p>
+</div>
+<div class="lg:col-span-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<!-- Review 1 -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-on-primary-fixed">ES</div>
+<div>
+<div class="font-bold text-on-surface text-sm">Elena S.</div>
+<div class="text-xs text-on-surface-variant">University Student</div>
+</div>
+</div>
+<p class="text-sm italic text-on-surface-variant">"The seamless booking interface is what sets Take Your Time apart. I can schedule my entire week of physics and math in under two minutes."</p>
+</div>
+<!-- Review 2 -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm translate-y-8">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed">MB</div>
+<div>
+<div class="font-bold text-on-surface text-sm">Marcus B.</div>
+<div class="text-xs text-on-surface-variant">Parent of 2</div>
+</div>
+</div>
+<p class="text-sm italic text-on-surface-variant">"Finding a quality tutor for SAT prep was daunting until we found this platform. The caliber of educators here is truly premium."</p>
+</div>
+<!-- Review 3 -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center font-bold text-on-tertiary-fixed">JT</div>
+<div>
+<div class="font-bold text-on-surface text-sm">James T.</div>
+<div class="text-xs text-on-surface-variant">Graduate Student</div>
+</div>
+</div>
+<p class="text-sm italic text-on-surface-variant">"As someone managing a busy work-study schedule, the calendar integration and automated reminders are life-savers."</p>
+</div>
+<!-- Review 4 -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm translate-y-8">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-on-surface">RL</div>
+<div>
+<div class="font-bold text-on-surface text-sm">Rachel L.</div>
+<div class="text-xs text-on-surface-variant">PhD Candidate</div>
+</div>
+</div>
+<p class="text-sm italic text-on-surface-variant">"The session quality is exceptional. My tutor really took the time to understand my learning gaps."</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="py-32 px-12 text-center max-w-[1440px] mx-auto">
+<div class="bg-primary rounded-[2.5rem] p-16 md:p-24 relative overflow-hidden">
+<div class="absolute inset-0 bg-[linear-gradient(45deg,rgba(0,0,0,0.1)_0%,transparent_100%)]"></div>
+<div class="relative z-10 max-w-2xl mx-auto">
+<h2 class="text-[2.5rem] md:text-[3rem] font-bold text-white mb-8 leading-tight">Ready to elevate your learning journey?</h2>
+<p class="text-white/80 mb-12 text-lg">Join hundreds of students who have found their perfect academic partner on Take Your Time.</p>
+<button class="bg-white text-primary px-10 py-5 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all scale-100 hover:scale-105 active:scale-95">Book Your First Session</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-white dark:bg-slate-950 border-t-0 tonal-fluidity-bg-shift-to-slate-50">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-[1440px] mx-auto">
+<div class="md:col-span-1">
+<div class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-6">Take Your Time</div>
+<p class="text-slate-500 font-inter body-lg mb-6">Elevating the tutoring experience through intentional design and expert instruction.</p>
+<div class="flex gap-4">
+<a class="text-slate-400 hover:text-blue-500 transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-slate-400 hover:text-blue-500 transition-colors" href="#"><span class="material-symbols-outlined">campaign</span></a>
+<a class="text-slate-400 hover:text-blue-500 transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-on-surface mb-6">Platform</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-400 font-inter body-lg hover:text-blue-500 underline-offset-4 hover:underline transition-all" href="#">Find Tutors</a></li>
+<li><a class="text-slate-400 font-inter body-lg hover:text-blue-500 underline-offset-4 hover:underline transition-all" href="#">How It Works</a></li>
+<li><a class="text-slate-400 font-inter body-lg hover:text-blue-500 underline-offset-4 hover:underline transition-all" href="#">Pricing</a></li>
+<li><a class="text-slate-400 font-inter body-lg hover:text-blue-500 underline-offset-4 hover:underline transition-all" href="#">Session Types</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-on-surface mb-6">Support</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-400 font-inter body-lg hover:text-blue-500 underline-offset-4 hover:underline transition-all" href="#">Contact Support</a></li>
+<li><a class="text-slate-400 font-inter body-lg hover:text-blue-500 underline-offset-4 hover:underline transition-all" href="#">Help Center</a></li>
+<li><a class="text-slate-400 font-inter body-lg hover:text-blue-500 underline-offset-4 hover:underline transition-all" href="#">Privacy Policy</a></li>
+<li><a class="text-slate-400 font-inter body-lg hover:text-blue-500 underline-offset-4 hover:underline transition-all" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-on-surface mb-6">Newsletter</h4>
+<p class="text-slate-500 text-sm mb-4">Get the latest education insights delivered to your inbox.</p>
+<div class="flex gap-2">
+<input class="bg-surface-container-low border-none rounded-lg px-4 py-2 w-full text-sm focus:ring-2 focus:ring-primary/20" placeholder="Email address" type="email"/>
+<button class="bg-primary text-white p-2 rounded-lg"><span class="material-symbols-outlined text-sm">send</span></button>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto px-16 py-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-slate-400 text-xs tracking-widest uppercase">© 2024 Take Your Time Editorial. All rights reserved.</div>
+<div class="flex gap-8">
+<a class="text-slate-400 text-xs tracking-widest uppercase hover:text-primary transition-colors" href="#">Cookie Policy</a>
+<a class="text-slate-400 text-xs tracking-widest uppercase hover:text-primary transition-colors" href="#">Sitemap</a>
+</div>
+</div>
+</footer>
+</body></html>

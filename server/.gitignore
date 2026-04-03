@@ -1,0 +1,8 @@
+node_modules
+.env
+*.log
+npm-debug.log*
+promote-admin.js
+dist
+coverage
+.DS_Store

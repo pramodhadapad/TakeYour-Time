@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Dashboard - Take Your Time</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-primary": "#b4c5ff",
+              "secondary": "#712ae2",
+              "inverse-surface": "#283044",
+              "on-tertiary-fixed-variant": "#005320",
+              "on-error-container": "#93000a",
+              "secondary-fixed": "#eaddff",
+              "surface-container-low": "#f2f3ff",
+              "secondary-container": "#8a4cfc",
+              "outline": "#737686",
+              "surface-bright": "#faf8ff",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "on-surface-variant": "#434655",
+              "tertiary-container": "#007f36",
+              "surface-container": "#eaedff",
+              "surface-tint": "#0053db",
+              "tertiary-fixed-dim": "#62df7d",
+              "on-secondary": "#ffffff",
+              "on-surface": "#131b2e",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e2e7ff",
+              "on-secondary-container": "#fffbff",
+              "surface-container-lowest": "#ffffff",
+              "surface-variant": "#dae2fd",
+              "on-tertiary-fixed": "#002109",
+              "inverse-on-surface": "#eef0ff",
+              "background": "#faf8ff",
+              "tertiary-fixed": "#7ffc97",
+              "surface-container-highest": "#dae2fd",
+              "on-secondary-fixed": "#25005a",
+              "primary-fixed": "#dbe1ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-background": "#131b2e",
+              "primary": "#004ac6",
+              "secondary-fixed-dim": "#d2bbff",
+              "tertiary": "#006329",
+              "primary-container": "#2563eb",
+              "on-tertiary": "#ffffff",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-primary-container": "#eeefff",
+              "surface": "#faf8ff",
+              "on-primary-fixed": "#00174b",
+              "surface-dim": "#d2d9f4",
+              "on-secondary-fixed-variant": "#5a00c6",
+              "on-tertiary-container": "#c7ffca",
+              "on-error": "#ffffff",
+              "outline-variant": "#c3c6d7"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf8ff; color: #131b2e; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .tonal-fluidity { transition: background-color 0.3s ease; }
+        .no-line { border: none !important; }
+        .click-feedback-subtle:active { transform: scale(0.98); }
+    </style>
+</head>
+<body class="bg-surface">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-900 flex flex-col p-6 z-40">
+<div class="mb-10">
+<span class="text-lg font-black text-blue-600">Take Your Time</span>
+</div>
+<div class="flex items-center gap-3 mb-8 px-2">
+<img alt="User Profile" class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Close up portrait of a young professional man with a friendly expression in a modern bright indoor setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdS19lPeNMlOmuxO4bupq49WPOF8kYiPmlRwXb9JzdCMD-LGhLKjX9AlOBIDWtfvI-abNysKxck_E7sFWg-TVb-lkT0lXQZCykhOPFBraeC8EbTR_yNEH3Nqh8oQgx7aVxRia4Ridg88UKm4N1f5pKKoLbAhqjw_VM32_QHVMrhu81yf8yIvQ8KK2Op5fSimX74DDpmzZbtXqjskNLjEAia7Gt5fEF8ksK8_2VxqiRt9OIxvhB88txR-8yhuLLWch1ZAhBHBIHjPY"/>
+<div>
+<p class="text-[1rem] font-semibold text-on-surface leading-tight">Alex Mercer</p>
+<p class="text-[0.75rem] font-medium text-slate-500 uppercase tracking-wider">Premium Student</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active State Logic: Dashboard is current -->
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-300 rounded-lg shadow-sm font-semibold transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[1rem]">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-[1rem]">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="text-[1rem]">Sessions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+<span class="text-[1rem]">Messages</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 space-y-1">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl font-semibold mb-6 shadow-md hover:opacity-90 transition-all click-feedback-subtle">
+                Book New Session
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-lg transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[0.75rem] font-medium uppercase tracking-widest">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-lg transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-[0.75rem] font-medium uppercase tracking-widest">Help</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen bg-surface-container-low p-12">
+<div class="max-w-6xl mx-auto space-y-12">
+<!-- Header Section -->
+<header class="flex justify-between items-end">
+<div>
+<span class="text-[0.75rem] font-medium text-primary uppercase tracking-[0.2em] mb-2 block">Student Workspace</span>
+<h1 class="text-[3.5rem] font-bold text-on-surface tracking-tighter leading-none">Dashboard</h1>
+</div>
+<div class="text-right">
+<p class="text-slate-500 font-medium">Monday, June 12</p>
+</div>
+</header>
+<!-- Top Row: Next Session & Stats -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Next Session Bento Card -->
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0px_20px_40px_rgba(15,23,42,0.04)] flex justify-between items-center relative overflow-hidden group">
+<div class="relative z-10 flex gap-8 items-center">
+<div class="w-24 h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+<img alt="Tutor Profile" class="w-full h-full object-cover" data-alt="Professional headshot of a woman with glasses smiling warmly in a bright modern office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC43BzFdfVapslKAe3OOQA7SCiC8IlNOyQufJj_54RYlQCGLoCngVSHEZ7T_lpV6Rk8IljlO8y9ZAVPLvzHQ9Mk7ahheDf-QxvOj2Pcbhe9nmgpVbbTgSw84gmO8KQQquAw5sIOZ-lbD2il71cHBLZ_mFKD8pqqcfdglcwThokXSdEWDYxgzaRgbWqQgUwweFDq3T4Dqs1rXN-mM9-Xl_3fI93F47BD6Q3eJN06thdx4WAowS_SVV-fg0O6VgfAlLH3wHxHxhOdPzY"/>
+</div>
+<div class="space-y-1">
+<div class="inline-flex items-center px-3 py-1 bg-tertiary-container text-on-tertiary-container rounded-full text-[0.65rem] font-bold uppercase tracking-wider mb-2">
+                                Confirmed
+                            </div>
+<h2 class="text-[1.75rem] font-semibold tracking-tight text-on-surface">Advanced Calculus</h2>
+<p class="text-slate-500 font-medium">with Dr. Sarah Chen • Today, 4:00 PM</p>
+</div>
+</div>
+<div class="relative z-10 flex flex-col gap-3">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-xl font-bold shadow-lg shadow-blue-500/20 hover:scale-[1.02] active:scale-95 transition-all">
+                            Join Session
+                        </button>
+<button class="text-primary font-semibold text-sm hover:underline underline-offset-4">View Details</button>
+</div>
+<!-- Decorative Background Element -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-20 -mt-20 group-hover:scale-110 transition-transform duration-700"></div>
+</div>
+<!-- Stats Bento Card -->
+<div class="col-span-4 bg-primary-container p-8 rounded-[2rem] flex flex-col justify-between text-on-primary-container relative overflow-hidden">
+<div>
+<span class="material-symbols-outlined text-4xl mb-4" data-icon="auto_stories">auto_stories</span>
+<p class="text-[0.75rem] font-bold uppercase tracking-widest opacity-80">Total Learning Hours</p>
+</div>
+<div>
+<h3 class="text-5xl font-black tracking-tighter">48.5</h3>
+<p class="text-sm font-medium opacity-80 mt-1">across 32 sessions</p>
+</div>
+<div class="absolute bottom-0 right-0 p-4 opacity-20">
+<span class="material-symbols-outlined text-8xl" data-icon="trending_up">trending_up</span>
+</div>
+</div>
+</div>
+<!-- Upcoming Sessions Section -->
+<section class="space-y-6">
+<div class="flex justify-between items-center">
+<h2 class="text-[1.75rem] font-semibold tracking-tight text-on-surface">Upcoming Sessions</h2>
+<button class="text-primary font-bold text-sm tracking-wide flex items-center gap-1">
+                        View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="space-y-4">
+<!-- Booking Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl flex items-center justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center gap-6">
+<div class="w-16 h-16 bg-slate-50 rounded-xl flex flex-col items-center justify-center border border-slate-100">
+<span class="text-[0.65rem] font-bold text-slate-400 uppercase">Jun</span>
+<span class="text-xl font-black text-on-surface">14</span>
+</div>
+<div>
+<h4 class="font-bold text-lg text-on-surface">Modern History: The Industrial Revolution</h4>
+<p class="text-slate-500 text-sm">Friday • 10:00 AM - 11:30 AM • Marcus Aurelius</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-3 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-xl transition-colors">
+<span class="material-symbols-outlined" data-icon="calendar_add_on">calendar_add_on</span>
+</button>
+<button class="px-6 py-2.5 text-error font-semibold text-sm hover:bg-error/5 rounded-xl transition-colors">
+                                Cancel
+                            </button>
+</div>
+</div>
+<!-- Booking Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl flex items-center justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center gap-6">
+<div class="w-16 h-16 bg-slate-50 rounded-xl flex flex-col items-center justify-center border border-slate-100">
+<span class="text-[0.65rem] font-bold text-slate-400 uppercase">Jun</span>
+<span class="text-xl font-black text-on-surface">18</span>
+</div>
+<div>
+<h4 class="font-bold text-lg text-on-surface">Creative Writing &amp; Poetry Workshop</h4>
+<p class="text-slate-500 text-sm">Tuesday • 2:00 PM - 3:00 PM • Elena Gilbert</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-3 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-xl transition-colors">
+<span class="material-symbols-outlined" data-icon="calendar_add_on">calendar_add_on</span>
+</button>
+<button class="px-6 py-2.5 text-error font-semibold text-sm hover:bg-error/5 rounded-xl transition-colors">
+                                Cancel
+                            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Past Sessions Section -->
+<section class="space-y-6">
+<h2 class="text-[1.75rem] font-semibold tracking-tight text-on-surface">Past Sessions</h2>
+<div class="grid grid-cols-1 gap-1">
+<!-- Session Row 1 -->
+<div class="bg-white/40 border-b border-slate-200 py-6 flex items-center justify-between px-4 hover:bg-white transition-colors first:rounded-t-2xl last:rounded-b-2xl last:border-b-0">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Tutor" class="w-full h-full object-cover" data-alt="Professional male portrait with neutral background and soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU8WhRAwCwLXLzK4Wl6BkFSqg7mv1vpdLFdxh5HpiQ_hmVBE-ScheCGjMMWqa6eHbLvWNpyA3osHYMs7vUU8WE3QTPDhqUSmeQHt0rXXLLFpcdcwl0NbcYHJMPMfxzcl61T7qMGifYgwUw56CIcyhHTLhOQXOb9AmwQCwS1FVa6keL3EmNwjvGpxhK2wM8ftg-UawcUzrT6lpgGHEt8wxw9JJpZadsJYQK5YeYHUj9iRoK07gNdRBDTps7_ZShFMuXrjmUh5c52VU"/>
+</div>
+<div>
+<p class="font-bold text-on-surface">Introduction to Python</p>
+<p class="text-xs text-slate-500 font-medium">Completed on June 5, 2024</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 text-secondary font-semibold text-sm hover:underline underline-offset-4">
+<span class="material-symbols-outlined text-base" data-icon="rate_review">rate_review</span>
+                                Leave Review
+                            </button>
+<button class="bg-slate-100 text-on-surface px-6 py-2 rounded-lg font-bold text-sm hover:bg-slate-200 transition-colors">
+                                Rebook
+                            </button>
+</div>
+</div>
+<!-- Session Row 2 -->
+<div class="bg-white/40 border-b border-slate-200 py-6 flex items-center justify-between px-4 hover:bg-white transition-colors last:rounded-b-2xl last:border-b-0">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Tutor" class="w-full h-full object-cover" data-alt="Confident woman smiling in professional setting with blurred library background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_PNIV1V2gh-77y6qH3A_thlDBAZd8YQUISIskkeNCF0fcO5VNP9chHkcDDsbhBqtEMsy6oVj5LyV0NNUL9de31p8KxCTwBon98eNh1ieTy_NLuVFUlfejOXavSq7E_rgcbSYlgEf8u82eMpVYTN4xSfhxVKQAysXZEWTSlX_S4EIcukF4JAtrx5wO9zCSxJ1My8KSBulaTla3jgFYVwfEQ9qBagw6l08PCnbA2Kl_SSknRwTzYSzfb1dleydaKydWQvvDN4RsLkQ"/>
+</div>
+<div>
+<p class="font-bold text-on-surface">Microeconomics Foundations</p>
+<p class="text-xs text-slate-500 font-medium">Completed on May 29, 2024</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-lg" data-icon="star" data-weight="fill">star</span>
+<span class="text-sm font-bold">5.0 Given</span>
+</div>
+<button class="bg-slate-100 text-on-surface px-6 py-2 rounded-lg font-bold text-sm hover:bg-slate-200 transition-colors">
+                                Rebook
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="mt-20 border-t border-slate-200/50 pt-12 pb-8 max-w-6xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-slate-500">
+<div class="col-span-1 md:col-span-1">
+<span class="text-lg font-bold text-slate-900 dark:text-slate-100 block mb-4">Take Your Time</span>
+<p class="text-sm leading-relaxed">Redefining the educational experience through premium mentorship and seamless discovery.</p>
+</div>
+<div>
+<h5 class="text-[0.75rem] font-bold uppercase tracking-widest text-slate-900 mb-4">Legal</h5>
+<ul class="space-y-2 text-sm">
+<li><a class="hover:text-blue-500 hover:underline underline-offset-4 transition-all" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-blue-500 hover:underline underline-offset-4 transition-all" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-[0.75rem] font-bold uppercase tracking-widest text-slate-900 mb-4">Support</h5>
+<ul class="space-y-2 text-sm">
+<li><a class="hover:text-blue-500 hover:underline underline-offset-4 transition-all" href="#">Contact Support</a></li>
+<li><a class="hover:text-blue-500 hover:underline underline-offset-4 transition-all" href="#">Cookie Policy</a></li>
+</ul>
+</div>
+<div class="text-sm">
+<p class="mb-4">© 2024 Take Your Time Editorial. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

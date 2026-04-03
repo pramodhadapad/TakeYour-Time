@@ -1,0 +1,475 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+/* ───────────────────────── constants ───────────────────────── */
+const TOTAL_FRAMES = 26;
+const framePaths = Array.from(
+  { length: TOTAL_FRAMES },
+  (_, i) => `/images/scroll-frames/ezgif-frame-${String(i + 1).padStart(3, '0')}.jpg`
+);
+
+const HERO_IMG =
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuD8wh90co53i0uylVkliPZGQtHpIj52reRu15H4lQ3U5sLJXLd9EKk0Er2gGLoFc8-SJp94nA2BS-2TW95YQEN-MCxuDv-uRQuS4fqyOe-lggdSOKFuUa3R1VcsAgqQd65-a-QUznFfia673VM23zr7p7gja3ICgkYcPZutQ8bkHQdjm0N1KgwBWkwq6iZEwZbcZDwADHEnhnkhtYURldM3pzfLOe-IcvxMa4SfHop381XK5QFc_5VEFQ7cwNcx0r7-UUpOc31yu84';
+const CARD_IMGS = [
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuCdKXOKJmBnwhCZsHU8I9Rg4pF76Z0EfAwt83YLbnRu-oWoW7w1rGZj54WaNGAbJ7JszrwR26nlOG5UEuleg8rQXVrg7oIAslmMo-2lehfkMqdIeoX3KOgUnJIyvB81H2TnbcI324kIbFmR2C_zJ1w8uXpBB1OTp_TzHq7rjaSMToHLgII3w0noc6EP35U9htE-3wSZilsKCxa3kr-NEMmiMoobvw2Vz8oBuTEl5wnzA3VdhusqX3vV4auiBZ_U-5S9TTqTNPLhYJ4',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuBR1PxJfJBEgeg6rcSxgvBmjREQqStyLV3bOBte9WmHcWw3A0XgNayTM_Y4gjJNyMXMYedtM-Rpf_IF1gBmu4h3qN2RiSgTmpn-xwFZ2fhz40z5GUexADkgzrYYX0tZpnBkVrz5r8PWU5V36N0QSS2WCwCmncNUMsHaY4DupjP1jDY2kP735cTVpDskC74nlzFjxSuRIAlMD69fgJrCvR042ze6CRrJBgUBmOEkR-us9d1Z2-tFAMoZer-EbMf4XENyhBOqiQoU_h8',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuB0p7mnWuswzcvlbFsy2lHGs9-EaK4AmVt9FL7OLz0yRnXBF_htIw10AKEg0gnai_BlmgGj6fBo3zfvQhZ27MivZO9KAZ56VxmNeLP1cH2JxAPwQ9UjRaBYM0o_n63HxPDuZep3UXi_5h6lnEowLT57A_pYeMz8O0gqFp97vCF8m2i8mnsc2BVnSAfgbPgeLDeQQ-CrwEQHkVXqQPMEIPZqvFjKIcQH1INlRG8sf-UvCtyxurqReEAMU4iv5LASfV9BqlxOXI6pwMU',
+];
+
+/* ───────────────── Scroll-Triggered Frame Sequence ──────────── */
+function useScrollFrames(canvasRef, containerRef) {
+  const imagesRef = useRef([]);
+  const loadedRef = useRef(0);
+
+  useEffect(() => {
+    // pre-load all frames
+    const imgs = framePaths.map((src, i) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedRef.current++;
+        if (loadedRef.current === 1) drawFrame(0); // draw first frame immediately
+      };
+      return img;
+    });
+    imagesRef.current = imgs;
+
+    function drawFrame(index) {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const img = imagesRef.current[index];
+      if (!img || !img.complete) return;
+      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // cover-fit
+      const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+      const x = (canvas.width - img.width * scale) / 2;
+      const y = (canvas.height - img.height * scale) / 2;
+      ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+    }
+
+    function onScroll() {
+      const container = containerRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const scrollable = container.offsetHeight - window.innerHeight;
+      const progress = Math.min(Math.max(-rect.top / scrollable, 0), 1);
+      const frameIndex = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
+      drawFrame(frameIndex);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+}
+
+/* ───────────────── Intersection Observer Hook ──────────────── */
+function useReveal() {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.unobserve(el); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return [ref, visible];
+}
+
+function Reveal({ children, className = '', delay = 0 }) {
+  const [ref, visible] = useReveal();
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(36px)',
+        transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LANDING PAGE
+   ═══════════════════════════════════════════════════════════════ */
+export default function Landing() {
+  const canvasRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+
+  useScrollFrames(canvasRef, scrollContainerRef);
+
+  return (
+    <div className="landing-root" style={{ fontFamily: "'Inter', sans-serif", background: '#faf8ff', color: '#131b2e' }}>
+
+      {/* ─── FIXED NAV ─── */}
+      <nav style={{
+        position: 'fixed', top: 0, width: '100%', zIndex: 1000, /* INCREASED Z-INDEX EXTREMELY HIGH */
+        background: 'rgba(255,255,255,0.80)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        boxShadow: '0 20px 40px rgba(15,23,42,0.06)',
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 48px', maxWidth: 1440, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+            <Link to="/" style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', color: '#0f172a', textDecoration: 'none' }}>Take Your Time</Link>
+            <div style={{ display: 'flex', gap: 24 }} className="hide-mobile">
+              <Link to="/browse" style={{...navLink, display: 'inline-block'}}>FIND TUTORS</Link>
+              <a href="#how" style={{...navLink, display: 'inline-block'}}>HOW IT WORKS</a>
+              <a href="#sessions" style={{...navLink, display: 'inline-block'}}>SESSION TYPES</a>
+              <a href="#reviews" style={{...navLink, display: 'inline-block'}}>REVIEWS</a>
+            </div>
+          </div>
+          <Link to="/login" style={{
+            background: '#2563eb', color: '#fff', padding: '10px 24px', borderRadius: 8,
+            fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer', textDecoration: 'none',
+            boxShadow: '0 4px 12px rgba(37,99,235,0.3)',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+            display: 'inline-block', position: 'relative', zIndex: 1001
+          }}>Sign In</Link>
+        </div>
+      </nav>
+
+      {/* ─── SCROLL VIDEO SEQUENCE ─── */}
+      <div ref={scrollContainerRef} style={{ height: '400vh', position: 'relative' }}>
+        <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+          <canvas
+            ref={canvasRef}
+            style={{ width: '100%', height: '100%', display: 'block', background: '#0a0a0a' }}
+          />
+          {/* Overlay text at the bottom */}
+          <div style={{
+            position: 'absolute', bottom: '8%', left: 0, right: 0, textAlign: 'center',
+            color: '#fff', zIndex: 2,
+          }}>
+            <p style={{ fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.7 }}>
+              scroll to explore the journey
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── HERO SECTION ─── */}
+      <section style={{ padding: '100px 48px 80px', maxWidth: 1440, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 64, minHeight: 720 }} id="hero">
+        <div style={{ flex: 1 }}>
+          <Reveal>
+            <h1 style={{ fontSize: '3.5rem', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: 24 }}>
+              Tutor more, <br /><span style={{ color: '#004ac6' }}>manage less.</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p style={{ fontSize: '1.125rem', color: '#434655', marginBottom: 40, maxWidth: 480, lineHeight: 1.7 }}>
+              The premium booking tool built for professional educators. Elevate your teaching practice with a platform that handles the logistics so you can focus on the learning.
+            </p>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+              <Link to="/browse" style={{...btnPrimary, textDecoration: 'none', display: 'inline-block'}}>View Available Sessions</Link>
+              <a href="#how" style={{...btnSecondary, textDecoration: 'none', display: 'inline-block'}}>Learn More</a>
+            </div>
+          </Reveal>
+        </div>
+        <div style={{ flex: 1, position: 'relative' }} className="hide-mobile">
+          <Reveal delay={0.2}>
+            <div style={{ position: 'absolute', top: -40, right: -40, width: 256, height: 256, background: 'rgba(138,76,252,0.08)', borderRadius: '50%', filter: 'blur(60px)' }} />
+            <div style={{
+              borderRadius: 16, overflow: 'hidden', boxShadow: '0 25px 50px rgba(0,0,0,0.15)',
+              transform: 'rotate(1deg)', transition: 'transform 0.5s',
+            }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'rotate(0deg)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'rotate(1deg)'}
+            >
+              <img src={HERO_IMG} alt="Professional Educator" style={{ width: '100%', height: 520, objectFit: 'cover', display: 'block' }} />
+            </div>
+            {/* Floating testimonial chip */}
+            <div style={{
+              position: 'absolute', bottom: -24, left: -24,
+              background: '#fff', padding: '20px 24px', borderRadius: 12,
+              boxShadow: '0 8px 30px rgba(0,0,0,0.12)', maxWidth: 280,
+              borderLeft: '4px solid #2563eb',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                <span style={{ color: '#2563eb', fontSize: 20 }}>★</span>
+                <span style={{ fontWeight: 700 }}>Top Rated</span>
+              </div>
+              <p style={{ fontSize: 13, color: '#434655', lineHeight: 1.5 }}>
+                "The most intuitive booking system I've used in 10 years of private tutoring."
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ─── HOW IT WORKS ─── */}
+      <section id="how" style={{ background: '#f2f3ff', padding: '120px 48px' }}>
+        <div style={{ maxWidth: 1440, margin: '0 auto' }}>
+          <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 80 }}>
+              <span style={{ color: '#004ac6', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', fontSize: 12, display: 'block', marginBottom: 12 }}>Process</span>
+              <h2 style={{ fontSize: '2rem', fontWeight: 700 }}>How It Works</h2>
+            </div>
+          </Reveal>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 48 }}>
+            {[
+              { icon: '🔍', title: '1. Browse', desc: 'Explore our curated list of professional educators and pick a session that matches your learning goals.' },
+              { icon: '📅', title: '2. Book', desc: 'Select a time slot that works for you. Our real-time availability sync ensures no double-bookings.' },
+              { icon: '🎥', title: '3. Attend', desc: 'Join your session via our high-definition video link. No extra software downloads required.' },
+            ].map((step, i) => (
+              <Reveal key={i} delay={i * 0.15}>
+                <div style={{ position: 'relative' }}>
+                  <div style={{
+                    width: 64, height: 64, borderRadius: 16, background: '#fff',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)', marginBottom: 24, fontSize: 28,
+                    transition: 'box-shadow 0.3s',
+                  }}>
+                    {step.icon}
+                  </div>
+                  <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 12 }}>{step.title}</h3>
+                  <p style={{ color: '#434655', lineHeight: 1.7 }}>{step.desc}</p>
+                  {i < 2 && (
+                    <span style={{ position: 'absolute', top: 32, right: -24, fontSize: 24, opacity: 0.15, display: 'none' }} className="show-arrow">→</span>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SESSION TYPES ─── */}
+      <section id="sessions" style={{ padding: '120px 48px', maxWidth: 1440, margin: '0 auto' }}>
+        <Reveal>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 64, flexWrap: 'wrap', gap: 16 }}>
+            <div>
+              <span style={{ color: '#712ae2', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', fontSize: 12, display: 'block', marginBottom: 12 }}>Specializations</span>
+              <h2 style={{ fontSize: '2rem', fontWeight: 700 }}>Curated Session Types</h2>
+            </div>
+            <Link to="/browse" style={{ color: '#004ac6', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+              View All Sessions →
+            </Link>
+          </div>
+        </Reveal>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
+          {[
+            { img: CARD_IMGS[0], title: 'Math Tutoring', badge: 'Individual', badgeBg: '#dbe1ff', badgeColor: '#00174b', price: '₹500/hr', cta: 'Book Now', desc: 'Personalized 1-on-1 sessions covering Algebra, Calculus, and Statistics for all levels.' },
+            { img: CARD_IMGS[1], title: 'Physics Group Class', badge: 'Group', badgeBg: '#eaddff', badgeColor: '#25005a', price: '₹300/hr', cta: 'Join Group', desc: 'Interactive group environment focusing on mechanics, electromagnetism, and modern physics.' },
+            { img: CARD_IMGS[2], title: 'SAT Prep', badge: 'Intensive', badgeBg: '#7ffc97', badgeColor: '#002109', price: '₹700/hr', cta: 'Start Prep', desc: 'Strategic preparation for SAT/ACT exams including mock tests and deep-dive review sessions.' },
+          ].map((card, i) => (
+            <Reveal key={i} delay={i * 0.12}>
+              <div style={{
+                background: '#fff', borderRadius: 16, overflow: 'hidden',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                transition: 'box-shadow 0.3s, transform 0.3s',
+                display: 'flex', flexDirection: 'column', height: '100%',
+                cursor: 'pointer',
+              }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.12)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+              >
+                <div style={{ height: 192, overflow: 'hidden' }}>
+                  <img src={card.img} alt={card.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                  />
+                </div>
+                <div style={{ padding: 32, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+                    <h3 style={{ fontSize: 18, fontWeight: 700 }}>{card.title}</h3>
+                    <span style={{
+                      background: card.badgeBg, color: card.badgeColor,
+                      fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 999,
+                      textTransform: 'uppercase', letterSpacing: '0.05em',
+                    }}>{card.badge}</span>
+                  </div>
+                  <p style={{ color: '#434655', fontSize: 14, marginBottom: 24, flex: 1, lineHeight: 1.6 }}>{card.desc}</p>
+                  <div style={{ paddingTop: 20, borderTop: '1px solid #e2e7ff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: 700, color: '#004ac6' }}>{card.price}</span>
+                    <button style={{ color: '#004ac6', fontWeight: 600, fontSize: 14, background: 'none', border: 'none', cursor: 'pointer' }}>{card.cta}</button>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── REVIEWS ─── */}
+      <section id="reviews" style={{ background: '#f2f3ff', padding: '120px 48px' }}>
+        <div style={{ maxWidth: 1440, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 64 }} className="reviews-grid">
+          <Reveal>
+            <div>
+              <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: 24 }}>Trusted by the Intellectual Community</h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
+                <div style={{ fontSize: '3.5rem', fontWeight: 800, color: '#004ac6', lineHeight: 1 }}>4.8</div>
+                <div>
+                  <div style={{ color: '#004ac6', fontSize: 20, letterSpacing: 2 }}>★★★★★</div>
+                  <div style={{ color: '#434655', fontSize: 14, marginTop: 4 }}>from 23 verified reviews</div>
+                </div>
+              </div>
+              <p style={{ color: '#434655', lineHeight: 1.7 }}>
+                Our tutors are vetted for both expertise and teaching ability. We maintain a strict quality standard to ensure every session is productive.
+              </p>
+            </div>
+          </Reveal>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="reviews-cards">
+            {[
+              { init: 'ES', name: 'Elena S.', role: 'University Student', bg: '#dbe1ff', color: '#00174b', text: '"The seamless booking interface is what sets Take Your Time apart. I can schedule my entire week of physics and math in under two minutes."', offset: false },
+              { init: 'MB', name: 'Marcus B.', role: 'Parent of 2', bg: '#eaddff', color: '#25005a', text: '"Finding a quality tutor for SAT prep was daunting until we found this platform. The caliber of educators here is truly premium."', offset: true },
+              { init: 'JT', name: 'James T.', role: 'Graduate Student', bg: '#7ffc97', color: '#002109', text: '"As someone managing a busy work-study schedule, the calendar integration and automated reminders are life-savers."', offset: false },
+              { init: 'RL', name: 'Rachel L.', role: 'PhD Candidate', bg: '#dae2fd', color: '#131b2e', text: '"The session quality is exceptional. My tutor really took the time to understand my learning gaps."', offset: true },
+            ].map((r, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <div style={{
+                  background: '#fff', padding: 32, borderRadius: 16,
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                  transform: r.offset ? 'translateY(32px)' : 'none',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                    <div style={{
+                      width: 40, height: 40, borderRadius: '50%', background: r.bg, color: r.color,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontWeight: 700, fontSize: 14,
+                    }}>{r.init}</div>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: 14 }}>{r.name}</div>
+                      <div style={{ fontSize: 12, color: '#434655' }}>{r.role}</div>
+                    </div>
+                  </div>
+                  <p style={{ fontSize: 14, fontStyle: 'italic', color: '#434655', lineHeight: 1.6 }}>{r.text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FINAL CTA ─── */}
+      <section style={{ padding: '120px 48px', maxWidth: 1440, margin: '0 auto', textAlign: 'center' }}>
+        <Reveal>
+          <div style={{
+            background: '#004ac6', borderRadius: 40, padding: '96px 64px',
+            position: 'relative', overflow: 'hidden',
+          }}>
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(45deg, rgba(0,0,0,0.1) 0%, transparent 100%)' }} />
+            <div style={{ position: 'relative', zIndex: 1, maxWidth: 640, margin: '0 auto' }}>
+              <h2 style={{ fontSize: '2.8rem', fontWeight: 700, color: '#fff', marginBottom: 24, lineHeight: 1.15 }}>
+                Ready to elevate your learning journey?
+              </h2>
+              <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 48, fontSize: 18 }}>
+                Join hundreds of students who have found their perfect academic partner on Take Your Time.
+              </p>
+              <Link to="/login" style={{
+                background: '#fff', color: '#004ac6', padding: '20px 40px', borderRadius: 12,
+                fontWeight: 700, fontSize: 18, border: 'none', cursor: 'pointer',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)', textDecoration: 'none',
+                display: 'inline-block',
+                transition: 'transform 0.2s',
+              }}>
+                Book Your First Session
+              </Link>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer style={{ borderTop: 'none', background: 'linear-gradient(180deg, rgba(242,243,255,0.5) 0%, rgba(250,248,255,1) 100%)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 48, padding: '80px 64px', maxWidth: 1440, margin: '0 auto' }}>
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 24 }}>Take Your Time</div>
+            <p style={{ color: '#64748b', lineHeight: 1.6, marginBottom: 24 }}>Elevating the tutoring experience through intentional design and expert instruction.</p>
+            <div style={{ display: 'flex', gap: 16 }}>
+              {['🌐', '📢', '✉️'].map((icon, i) => (
+                <a key={i} href="#" style={{ color: '#94a3b8', fontSize: 18, textDecoration: 'none', transition: 'color 0.3s' }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#2563eb'}
+                  onMouseLeave={e => e.currentTarget.style.color = '#94a3b8'}
+                >{icon}</a>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h4 style={{ fontWeight: 700, marginBottom: 24 }}>Platform</h4>
+            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <li><Link to="/browse" style={footerLink}>Find Tutors</Link></li>
+              <li><a href="#how" style={footerLink}>How It Works</a></li>
+              <li><Link to="/terms" style={footerLink}>Pricing</Link></li>
+              <li><a href="#sessions" style={footerLink}>Session Types</a></li>
+              <li><Link to="/admin/dashboard" style={footerLink}>Admin Login</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style={{ fontWeight: 700, marginBottom: 24 }}>Support</h4>
+            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <li><a href="mailto:support@takeyourtime.app" style={footerLink}>Contact Support</a></li>
+              <li><a href="mailto:support@takeyourtime.app" style={footerLink}>Help Center</a></li>
+              <li><Link to="/privacy" style={footerLink}>Privacy Policy</Link></li>
+              <li><Link to="/terms" style={footerLink}>Terms of Service</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style={{ fontWeight: 700, marginBottom: 24 }}>Newsletter</h4>
+            <p style={{ color: '#64748b', fontSize: 14, marginBottom: 16 }}>Get the latest education insights delivered to your inbox.</p>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input
+                type="email" placeholder="Email address"
+                style={{ flex: 1, padding: '8px 16px', borderRadius: 8, border: 'none', background: '#f2f3ff', fontSize: 14, outline: 'none' }}
+              />
+              <button style={{ background: '#004ac6', color: '#fff', padding: '8px 14px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 16 }}>→</button>
+            </div>
+          </div>
+        </div>
+        <div style={{ maxWidth: 1440, margin: '0 auto', padding: '24px 64px', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+          <div style={{ color: '#94a3b8', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase' }}>© 2026 Take Your Time Editorial. All rights reserved.</div>
+          <div style={{ display: 'flex', gap: 32 }}>
+            <Link to="/privacy" style={{ color: '#94a3b8', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none' }}>Cookie Policy</Link>
+            <Link to="/browse" style={{ color: '#94a3b8', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none' }}>Sitemap</Link>
+          </div>
+        </div>
+      </footer>
+
+      {/* ─── responsive + animations CSS ─── */}
+      <style>{`
+        @media (max-width: 768px) {
+          .hide-mobile { display: none !important; }
+          .reviews-grid { grid-template-columns: 1fr !important; }
+          .reviews-cards { grid-template-columns: 1fr !important; }
+          section { padding-left: 20px !important; padding-right: 20px !important; }
+          h1 { font-size: 2.4rem !important; }
+        }
+        html { scroll-behavior: smooth; }
+      `}</style>
+    </div>
+  );
+}
+
+/* ─── shared inline styles ─── */
+const navLink = {
+  color: '#475569', fontSize: 12, fontWeight: 500,
+  letterSpacing: '0.1em', textTransform: 'uppercase',
+  textDecoration: 'none', transition: 'color 0.3s',
+};
+const btnPrimary = {
+  background: '#004ac6', color: '#fff', padding: '16px 32px', borderRadius: 8,
+  fontWeight: 600, fontSize: 16, border: 'none', cursor: 'pointer',
+  boxShadow: '0 8px 24px rgba(0,74,198,0.20)',
+  transition: 'transform 0.2s, box-shadow 0.2s',
+};
+const btnSecondary = {
+  background: '#e2e7ff', color: '#004ac6', padding: '16px 32px', borderRadius: 8,
+  fontWeight: 600, fontSize: 16, border: 'none', cursor: 'pointer',
+  transition: 'background 0.3s',
+};
+const footerLink = {
+  color: '#94a3b8', textDecoration: 'none', fontSize: 14,
+  transition: 'color 0.3s',
+};

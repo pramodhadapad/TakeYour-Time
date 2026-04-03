@@ -1,0 +1,27 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+dist/
+dist-ssr/
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Ensure these specific files aren't ever tracked
+server/.env
+client/.env
+client/.env.local
