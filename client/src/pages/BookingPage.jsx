@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import bookingService from '../services/bookingService';
 import reviewService from '../services/reviewService';
 import useBookingStore from '../store/bookingStore';
@@ -14,6 +14,7 @@ import { Star, Clock, MapPin, Video, Users, UserCircle } from 'lucide-react';
 
 export default function BookingPage() {
   const { tutorSlug } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuthStore();
   const { addToast } = useNotificationStore();
   const { selectedSession, selectedDate, selectedSlot, paymentMethod, setSelectedSession, setSelectedDate, setSelectedSlot, setPaymentMethod, reset } = useBookingStore();
@@ -45,6 +46,12 @@ export default function BookingPage() {
     load();
     return () => reset();
   }, [tutorSlug]);
+
+  useEffect(() => {
+    if (sessions.length === 1 && !selectedSession) {
+      setSelectedSession(sessions[0]);
+    }
+  }, [sessions, selectedSession, setSelectedSession]);
 
   useEffect(() => {
     const loadSlots = async () => {
@@ -79,7 +86,7 @@ export default function BookingPage() {
       return;
     }
     if (!selectedSession || !selectedDate || !selectedSlot) {
-      addToast({ type: 'warning', message: 'Please select session, date, and time slot.' });
+      addToast({ type: 'warning', message: 'Please select a session, date, and time slot first.' });
       return;
     }
 
@@ -116,7 +123,7 @@ export default function BookingPage() {
                 razorpay_signature: response.razorpay_signature,
                 bookingId: createdBooking._id
               });
-              addToast({ type: 'success', message: 'Payment successful! Booking confirmed.' });
+              addToast({ type: 'success', message: 'Payment successful! Slot confirmed.' });
               reset();
             } catch (err) {
               addToast({ type: 'error', message: err.response?.data?.error || 'Payment verification failed.' });
@@ -137,7 +144,7 @@ export default function BookingPage() {
         });
         rzp.open();
       } else {
-        addToast({ type: 'success', message: 'Booking confirmed! Check your dashboard.' });
+        addToast({ type: 'success', message: 'Slot confirmed! Check your dashboard.' });
         reset();
       }
     } catch (err) {
@@ -419,7 +426,7 @@ export default function BookingPage() {
               
               <button 
                 className="w-full bg-primary text-white py-5 rounded-[1.5rem] font-bold text-lg shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex justify-center items-center gap-2 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
-                disabled={booking || !selectedSession || !selectedDate || !selectedSlot}
+                disabled={booking}
                 onClick={handleBook}
               >
                 <span>{booking ? 'Confirming...' : 'Confirm Reservation'}</span>
