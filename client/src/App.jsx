@@ -62,7 +62,9 @@ function App() {
       <Routes>
         {/* Public */}
         <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={
+          <GuestRoute><Login /></GuestRoute>
+        } />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/browse" element={<BrowseTutors />} />
         <Route path="/book/:tutorSlug" element={<BookingPage />} />
