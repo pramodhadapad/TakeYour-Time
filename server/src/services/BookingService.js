@@ -96,14 +96,30 @@ class BookingService {
       console.error('[BookingService] Calendar sync skipped:', err.message);
     }
 
-    // Notify tutor
+    // Send professional confirmation emails to both student and tutor
     const student = await User.findById(studentId);
-    notificationService.notify(tutor, 'New Booking Received', `
-      <h2>New Booking</h2>
-      <p><strong>Student:</strong> ${student.name}</p>
-      <p><strong>Session:</strong> ${session.title}</p>
-      <p><strong>Date:</strong> ${new Date(booking.scheduledAt).toLocaleString()}</p>
-    `);
+    const { bookingConfirmationStudent, bookingNotificationTutor } = require('./emailTemplates');
+
+    const emailData = {
+      studentName: student.name,
+      studentEmail: student.email,
+      tutorName: tutor.name,
+      tutorEmail: tutor.email,
+      sessionTitle: session.title,
+      scheduledAt: booking.scheduledAt,
+      duration: session.durationMinutes,
+      mode: session.mode,
+      location: session.mode === 'online' ? session.onlineLink : session.offlineAddress,
+      price: session.price,
+      currency: session.currency,
+      bookingId: booking._id.toString().slice(-8).toUpperCase()
+    };
+
+    // Email to STUDENT — Booking Confirmation
+    notificationService.notify(student, '✅ Booking Confirmed — ' + session.title, bookingConfirmationStudent(emailData));
+
+    // Email to TUTOR — New Booking Alert
+    notificationService.notify(tutor, '📚 New Booking from ' + student.name, bookingNotificationTutor(emailData));
 
     return { booking, razorpayOrder };
   }
