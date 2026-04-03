@@ -27,14 +27,8 @@ function App() {
 
   /* Global Splash Screen Timer */
   useEffect(() => {
-    const timer = setTimeout(() => setIntroGone(true), 2800);
-    // Add a scroll listener to dismiss early if they start scrolling immediately
-    const onScroll = () => setIntroGone(true);
-    window.addEventListener('scroll', onScroll, { once: true });
-    return () => { 
-      clearTimeout(timer); 
-      window.removeEventListener('scroll', onScroll); 
-    };
+    const timer = setTimeout(() => setIntroGone(true), 1200);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
