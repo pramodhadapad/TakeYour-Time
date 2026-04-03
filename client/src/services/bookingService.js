@@ -4,7 +4,11 @@ export const bookingService = {
   // Public
   getTutor: (slug) => api.get(`/api/public/${slug}`),
   getTutorSessions: (slug) => api.get(`/api/public/${slug}/sessions`),
-  getAvailability: (slug, date) => api.get(`/api/public/${slug}/availability?date=${date}`),
+  getAvailability: (slug, date, sessionId) => {
+    let url = `/api/public/${slug}/availability?date=${date}`;
+    if (sessionId) url += `&sessionId=${sessionId}`;
+    return api.get(url);
+  },
   createBooking: (slug, data) => api.post(`/api/public/${slug}/book`, data),
 
   // Payments

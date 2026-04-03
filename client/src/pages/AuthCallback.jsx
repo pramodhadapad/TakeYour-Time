@@ -24,6 +24,13 @@ export default function AuthCallback() {
         if (isNew || !user.onboarded || !user.role) {
           navigate('/onboarding');
         } else {
+          const from = sessionStorage.getItem('redirectAfterLogin');
+          if (from) {
+            sessionStorage.removeItem('redirectAfterLogin');
+            navigate(from, { replace: true });
+            return;
+          }
+
           const dashboardMap = {
             tutor: '/tutor/dashboard',
             student: '/student/dashboard',

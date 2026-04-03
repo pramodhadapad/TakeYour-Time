@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 @theme {
   /* Brand Colors */
@@ -26,17 +27,17 @@
   }
 
   body {
-    background-color: #F1F5F9;
-    color: #0F172A;
-    font-family: var(--font-sans);
+    background-color: var(--color-surface, #f7f9fb);
+    color: var(--color-on-surface, #191c1e);
+    font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   /* Text selection */
   ::selection {
-    background: rgba(37, 99, 235, 0.15);
-    color: #1e3a5f;
+    background: rgba(83, 130, 255, 0.2);
+    color: #001d58;
   }
 
   /* Custom scrollbar */
@@ -48,16 +49,16 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.5);
+    background: rgba(200, 197, 208, 0.5);
     border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(100, 116, 139, 0.7);
+    background: rgba(71, 70, 79, 0.7);
   }
 
   /* Focus ring */
   *:focus-visible {
-    outline: 2px solid var(--color-brand-primary);
+    outline: 2px solid #5382ff;
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -123,7 +124,14 @@
   .delay-400 { animation-delay: 400ms; }
   .delay-500 { animation-delay: 500ms; }
 
-  /* Glass effect */
+  /* Glass effect from DESIGN.md */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
   .glass {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(16px) saturate(180%);
@@ -140,7 +148,7 @@
 
   /* Gradient text */
   .text-gradient {
-    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    background: linear-gradient(135deg, #000928, #001d58);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

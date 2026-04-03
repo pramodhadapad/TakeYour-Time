@@ -29,9 +29,9 @@ const getAvailability = async (req, res, next) => {
   try {
     const tutor = await User.findOne({ 'tutorProfile.slug': req.params.slug });
     if (!tutor) return res.status(404).json({ success: false, error: 'Tutor not found' });
-    const date = req.query.date;
+    const { date, sessionId } = req.query;
     if (!date) return res.status(400).json({ success: false, error: 'date query param required' });
-    const slots = await bookingService.getAvailableSlots(tutor._id, date);
+    const slots = await bookingService.getAvailableSlots(tutor._id, date, sessionId);
     res.json({ success: true, data: slots });
   } catch (err) { next(err); }
 };

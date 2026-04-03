@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-container-highest": "#e0e3e5",
+                    "primary": "#000928",
+                    "inverse-primary": "#b4c5ff",
+                    "on-tertiary-fixed-variant": "#633e1e",
+                    "secondary": "#5b598c",
+                    "on-tertiary-fixed": "#2e1500",
+                    "surface-container-low": "#f2f4f6",
+                    "on-secondary-fixed-variant": "#444173",
+                    "outline-variant": "#c8c5d0",
+                    "tertiary-container": "#371a00",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e6e8ea",
+                    "tertiary-fixed": "#ffdcc2",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#c7c3fe",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary": "#160700",
+                    "on-surface": "#191c1e",
+                    "on-tertiary-container": "#ae7f59",
+                    "surface-tint": "#0053db",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#dbe1ff",
+                    "inverse-surface": "#2d3133",
+                    "on-secondary-fixed": "#181445",
+                    "surface": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#47464f",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-background": "#191c1e",
+                    "on-secondary-container": "#514f81",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#f1bc91",
+                    "surface-dim": "#d8dadc",
+                    "background": "#f7f9fb",
+                    "outline": "#787680",
+                    "surface-container": "#eceef0",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "secondary-fixed": "#e3dfff",
+                    "primary-container": "#001d58",
+                    "on-primary-container": "#5382ff",
+                    "on-primary-fixed": "#00174b",
+                    "surface-variant": "#e0e3e5",
+                    "secondary-fixed-dim": "#c4c1fb",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Epilogue"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift-bg { background: linear-gradient(180deg, #f7f9fb 0%, #f2f4f6 100%); }
+        .glass-card { backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.7); }
+        .asymmetric-radius { border-radius: 24px 12px 24px 12px; }
+        .shadow-ambient { shadow-color: rgba(25, 28, 30, 0.06); box-shadow: 0 20px 40px -10px rgba(25, 28, 30, 0.06); }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-on-primary-container/30">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-900 shadow-2xl shadow-indigo-900/5 flex flex-col p-6 gap-2 z-50">
+<div class="mb-10 px-2 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">hourglass_empty</span>
+</div>
+<span class="text-xl font-bold tracking-tighter text-indigo-950">Take Your Time</span>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 text-indigo-700 dark:text-white rounded-xl shadow-sm transition-all scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-medium">My Sessions</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-medium">Messages</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-medium">Resources</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant/10 space-y-2">
+<button class="w-full bg-on-primary-container text-white py-3 px-4 rounded-xl font-semibold text-sm mb-4 flex items-center justify-center gap-2 shadow-lg shadow-on-primary-container/20">
+<span class="material-symbols-outlined text-sm">add</span>
+                Book New Session
+            </button>
+<div class="flex items-center gap-3 p-2 mb-4">
+<img alt="Alex Sterling" class="w-10 h-10 rounded-full object-cover ring-2 ring-white" data-alt="Professional headshot of a smiling young man in a slate blue linen shirt with warm studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN3i4nm876k5FTBN0DYkv4ILbho9Z6Yguyt2XYXIbEjYQS8pMnGx5BtTtCvBYGiwSuIlX6ZrzUKb7RWzi-lFAXXOlcXTtqtq4VmPQx-2QsK-uPgM9i6zJJaqpsGHURaJeiJ0RFnJh1Ueal0uu7rzFImu5WkznB5DBgei8WGSbUfm5itNeJAbWtqzt78a2Nz0F_jwBsKDTRwVhLFsXt6KuTSHHbDExjX5HJv2pEIh5vadWQgXCR88vOWeQI8_oGH2zV65qXjbxrb9c"/>
+<div>
+<p class="text-sm font-bold text-indigo-950">Alex Sterling</p>
+<p class="text-[10px] text-slate-500 font-medium tracking-wide uppercase">Premium Member</p>
+</div>
+</div>
+<a class="flex items-center gap-3 p-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-medium text-sm">Help Center</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-error hover:bg-error/5 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-medium text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen p-8 lg:p-12">
+<!-- Header -->
+<header class="flex justify-between items-end mb-12">
+<div>
+<h1 class="font-headline text-4xl font-bold tracking-tight text-primary mb-2">Welcome back, Alex.</h1>
+<p class="text-on-surface-variant font-medium">You have 3 sessions scheduled for this week.</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-3 bg-surface-container-lowest shadow-ambient rounded-xl text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-3 bg-surface-container-lowest shadow-ambient rounded-xl text-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<div class="grid grid-cols-12 gap-8">
+<!-- Hero: Next Session (Asymmetric Bento) -->
+<div class="col-span-12 lg:col-span-8">
+<div class="relative overflow-hidden asymmetric-radius bg-primary p-1 text-white shadow-2xl">
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-20 overflow-hidden pointer-events-none">
+<img alt="Background Texture" class="w-full h-full object-cover" data-alt="Modern collaborative workspace with abstract geometric light patterns and blurred computer screens in deep indigo tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG4vU0zCeOI5LCpVtX90A6y6kR4Jj9OLFS9PSgQm5fNgicwKZ68F0eoMdH_dmMwozAmeEoK0l4mX1d4PGyg4kSFKpQDGW6QdHBvDVRfLEw3rFdBoJxfxcDZeic_Ml1mBHDVX_5ObyJH_L-dHKvxoZnRs8eSOqUz_fuqwLdKsVlT4gRiJ6lPn6IajoSEIlFd0xJ4dll0hk_hCES-oki4z54CKeKW55gWKuHyjPeN49pKUJsgNNWeY-jinGre1NY6ojI87ZeO4ZZQ3g"/>
+</div>
+<div class="relative z-10 p-8 lg:p-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+<div class="max-w-md">
+<span class="inline-block px-3 py-1 rounded-full bg-on-primary-container/20 text-on-primary-container text-[11px] font-bold tracking-widest uppercase mb-6">Next Up</span>
+<h2 class="font-headline text-3xl font-bold mb-4">Advanced UI Principles &amp; Psychology</h2>
+<div class="flex items-center gap-6 text-slate-300 mb-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-sm font-medium">Starts in 45m</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">person</span>
+<span class="text-sm font-medium">Tutor: Sarah Drasner</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-on-primary-container hover:bg-on-primary-container/90 text-white px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-on-primary-container/30">
+                                    Join Video Call
+                                </button>
+<button class="text-white hover:text-white/80 font-bold px-6 py-4 flex items-center gap-2">
+                                    View Materials
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="hidden md:flex flex-col items-center gap-4 p-6 bg-white/5 rounded-2xl backdrop-blur-md border border-white/10">
+<div class="text-center">
+<p class="text-[10px] text-slate-400 uppercase tracking-tighter">Session Streak</p>
+<p class="text-4xl font-headline font-bold">12</p>
+</div>
+<div class="w-12 h-1 bg-on-primary-container rounded-full"></div>
+<div class="text-center">
+<p class="text-[10px] text-slate-400 uppercase tracking-tighter">XP Earned</p>
+<p class="text-xl font-headline font-bold text-on-primary-container">+450</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Card: Learning Velocity -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-8">
+<div class="bg-surface-container-lowest p-8 rounded-3xl shadow-ambient flex-1">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="font-headline text-xl font-bold text-primary">Learning Velocity</h3>
+<p class="text-xs text-slate-500">Monthly progress overview</p>
+</div>
+<span class="text-on-primary-container font-bold text-sm">+22%</span>
+</div>
+<!-- Bespoke Visualization Mock -->
+<div class="h-32 flex items-end justify-between gap-2 mb-8">
+<div class="w-full bg-slate-100 rounded-t-lg h-[40%] transition-all hover:bg-on-primary-container/20"></div>
+<div class="w-full bg-slate-100 rounded-t-lg h-[65%] transition-all hover:bg-on-primary-container/20"></div>
+<div class="w-full bg-on-primary-container rounded-t-lg h-[85%]"></div>
+<div class="w-full bg-slate-100 rounded-t-lg h-[55%] transition-all hover:bg-on-primary-container/20"></div>
+<div class="w-full bg-slate-100 rounded-t-lg h-[95%] transition-all hover:bg-on-primary-container/20"></div>
+<div class="w-full bg-slate-100 rounded-t-lg h-[70%] transition-all hover:bg-on-primary-container/20"></div>
+<div class="w-full bg-slate-100 rounded-t-lg h-[45%] transition-all hover:bg-on-primary-container/20"></div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">Focus Hours</span>
+<span class="font-bold">42.5h</span>
+</div>
+<div class="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+<div class="w-[75%] h-full bg-on-primary-container"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming List -->
+<div class="col-span-12 lg:col-span-7">
+<div class="flex justify-between items-center mb-6 px-2">
+<h3 class="font-headline text-2xl font-bold text-primary">Upcoming Schedule</h3>
+<button class="text-on-primary-container font-bold text-sm hover:underline">View Calendar</button>
+</div>
+<div class="space-y-4">
+<!-- Session Item -->
+<div class="group bg-surface-container-lowest p-5 rounded-3xl flex items-center justify-between transition-all hover:shadow-ambient hover:-translate-y-1">
+<div class="flex items-center gap-6">
+<div class="w-14 h-14 rounded-2xl bg-secondary-container/30 flex flex-col items-center justify-center text-primary">
+<span class="text-xs font-bold uppercase">Oct</span>
+<span class="text-xl font-headline font-bold">14</span>
+</div>
+<div>
+<h4 class="font-bold text-primary group-hover:text-on-primary-container transition-colors">Micro-interactions in Figma</h4>
+<p class="text-sm text-slate-500">with Julianne Moore • 02:00 PM</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-bold uppercase tracking-wider">Scheduled</span>
+<button class="material-symbols-outlined text-slate-400">more_vert</button>
+</div>
+</div>
+<!-- Session Item -->
+<div class="group bg-surface-container-lowest p-5 rounded-3xl flex items-center justify-between transition-all hover:shadow-ambient hover:-translate-y-1">
+<div class="flex items-center gap-6">
+<div class="w-14 h-14 rounded-2xl bg-secondary-container/30 flex flex-col items-center justify-center text-primary">
+<span class="text-xs font-bold uppercase">Oct</span>
+<span class="text-xl font-headline font-bold">17</span>
+</div>
+<div>
+<h4 class="font-bold text-primary group-hover:text-on-primary-container transition-colors">Data Viz for Executive Dashboards</h4>
+<p class="text-sm text-slate-500">with Marco Rossi • 10:30 AM</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-bold uppercase tracking-wider">Scheduled</span>
+<button class="material-symbols-outlined text-slate-400">more_vert</button>
+</div>
+</div>
+<!-- Session Item -->
+<div class="group bg-surface-container-lowest p-5 rounded-3xl flex items-center justify-between transition-all hover:shadow-ambient hover:-translate-y-1">
+<div class="flex items-center gap-6">
+<div class="w-14 h-14 rounded-2xl bg-secondary-container/30 flex flex-col items-center justify-center text-primary">
+<span class="text-xs font-bold uppercase">Oct</span>
+<span class="text-xl font-headline font-bold">19</span>
+</div>
+<div>
+<h4 class="font-bold text-primary group-hover:text-on-primary-container transition-colors">Portfolio Review &amp; Strategy</h4>
+<p class="text-sm text-slate-500">with Sarah Drasner • 04:00 PM</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-bold uppercase tracking-wider">Scheduled</span>
+<button class="material-symbols-outlined text-slate-400">more_vert</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Tutors/Messages: Side List -->
+<div class="col-span-12 lg:col-span-5">
+<div class="bg-surface-container-low asymmetric-radius p-8 h-full border border-outline-variant/10">
+<h3 class="font-headline text-xl font-bold text-primary mb-8">Active Tutors</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Sarah Drasner" class="w-12 h-12 rounded-full object-cover" data-alt="Close up of a professional woman with glasses and dark hair smiling warmly, soft daylight in a creative office space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz2jL6ecM6Vxege_vO5Zxb8S869WFWycEZljwe7NF748zvubXXjTOO_KkuZbGB8GKPc96W0diXhb907bP5em-IJe8JLEjPDzQzvbPbvNjf6TzAL28x2cgOMruXHCbdn0roBiXMNiH8bP5Eec6V73By_r6Vu4NxcQ1Lpk8CPqhHGhmfkMPYWogcxTjEEomA7Uax9xEA8lAeRatfOGhBoJM-DE0zy0skprWw4I98SekqWfclLzxd5QYYhBg3MyHiF_Sf_fkj-YrtJYI"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<p class="font-bold text-primary text-sm">Sarah Drasner</p>
+<p class="text-xs text-slate-500">UI &amp; Motion Expert</p>
+</div>
+</div>
+<button class="p-2 hover:bg-white rounded-lg transition-colors">
+<span class="material-symbols-outlined text-on-primary-container">chat_bubble</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Marco Rossi" class="w-12 h-12 rounded-full object-cover" data-alt="Creative male professional with a short beard and stylish glasses against a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGxcr_cL9ENvBtyrEEzuHw3-Uw7nM_qklGhk3yhGxUHYvdPEig2gZ_UMOCRjQkpRQUwgpfdtydhZnB7_7gVFB_sDc1F9X8vm02zv4UDSvBpilrabnYs2-ciCECjTmO9Ju8l0K1pdP_ucut7Z_3lKjiV8W7oNKLHObwDJwKmGIWcC-gj6hzrt-7ih62wMdLDUiR7xeUfQ6p5LvOJP6Y0Fyd2dNsbCJdN_JV5fRwp3GoBi2MgvCRzqMCzCh35fnOktfYCNtCbAU_gOY"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-slate-300 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<p class="font-bold text-primary text-sm">Marco Rossi</p>
+<p class="text-xs text-slate-500">Data Visualization</p>
+</div>
+</div>
+<button class="p-2 hover:bg-white rounded-lg transition-colors">
+<span class="material-symbols-outlined text-on-primary-container">chat_bubble</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Julianne Moore" class="w-12 h-12 rounded-full object-cover" data-alt="Friendly young woman with curly hair looking directly at camera with a confident expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9cPGFkwdqPpleA6mCqGSjhxeHOY5uo-vwgNUVZplqxQ2VieG7abrxd_N2vl1gV_WyTTOzvyrX104554TYmKgrv-9eJNuriADd0ILi6P7-1ixDRBI1DLxhG3jKRdYCWyyhnJ3YvCsbu-Dm6-fIjZsONdSTkyN5bCo6PzlHwUiSGuitJ_HcxmWEuIDUWj2WwVOxWkNpjspmhKrhYf0tw1tmwV2c2dTsGX33GYEtewpl7FgB9MmYSEEsVjo7A6ZO4Cq29UzXGUZYwtc"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div>
+<p class="font-bold text-primary text-sm">Julianne Moore</p>
+<p class="text-xs text-slate-500">Product Strategy</p>
+</div>
+</div>
+<button class="p-2 hover:bg-white rounded-lg transition-colors">
+<span class="material-symbols-outlined text-on-primary-container">chat_bubble</span>
+</button>
+</div>
+</div>
+<div class="mt-12 p-6 bg-primary-container rounded-2xl relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-xs font-bold text-on-primary-container/80 uppercase tracking-widest mb-2">New Resource</p>
+<h4 class="text-white font-headline font-bold mb-4">Design Systems Guide 2024</h4>
+<button class="text-xs font-bold text-white border-b border-white/40 pb-1">Download PDF</button>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-8xl text-white/5 rotate-12">auto_stories</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

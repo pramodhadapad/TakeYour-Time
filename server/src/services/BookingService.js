@@ -10,13 +10,20 @@ const paymentService = require('./PaymentService');
 
 class BookingService {
 
-  async getAvailableSlots(tutorId, dateStr) {
+  async getAvailableSlots(tutorId, dateStr, sessionId) {
     // Only return future slots that are not full
+    // Added a 15-minute grace period to prevent slots from disappearing while the user is browsing
+    const graceTime = new Date(Date.now() - 15 * 60000);
+
     const query = {
       tutorId,
-      startTime: { $gt: new Date() },
+      startTime: { $gt: graceTime },
       $expr: { $lt: ['$bookedCount', '$capacity'] }
     };
+
+    if (sessionId) {
+      query.sessionId = sessionId;
+    }
     
     // Optionally filter by exact date if dateStr provided
     if (dateStr) {

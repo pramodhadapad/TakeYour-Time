@@ -1,0 +1,405 @@
+﻿diff --git a/client/src/pages/student/Dashboard.jsx b/client/src/pages/student/Dashboard.jsx
+index a27521f..98b8b86 100644
+--- a/client/src/pages/student/Dashboard.jsx
++++ b/client/src/pages/student/Dashboard.jsx
+@@ -76,171 +76,252 @@ export default function StudentDashboard() {
+   }
+ 
+   return (
+-    <div className="min-h-screen bg-slate-50">
++    <div className="min-h-screen bg-surface font-body text-on-surface selection:bg-on-primary-container/30 pb-20">
+       <Navbar />
+ 
+-      {/* Header with gradient */}
+-      <div className="relative overflow-hidden" style={{
+-        background: 'linear-gradient(135deg, #1e3a5f 0%, #2563EB 50%, #3b82f6 100%)',
+-        padding: '48px 0 64px',
+-      }}>
+-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+-          <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full opacity-10"
+-            style={{ background: 'radial-gradient(circle, #fff 0%, transparent 70%)' }} />
+-        </div>
+-        <div className="max-w-5xl mx-auto px-6 relative z-10">
+-          <h1 className="text-3xl font-bold text-white mb-2 animate-fade-in-up">Student Dashboard</h1>
+-          <p className="text-white/60 animate-fade-in-up delay-100">Track your sessions and manage bookings</p>
+-        </div>
+-      </div>
+-
+-      <div className="max-w-5xl mx-auto px-6 -mt-8 relative z-10 pb-12">
+-
+-        {/* Stats Row */}
+-        <div className="grid md:grid-cols-3 gap-6 mb-10">
+-          {[
+-            { label: 'Upcoming Sessions', value: upcoming.length, icon: <Calendar size={20} />, color: 'text-blue-600', bg: 'bg-blue-100' },
+-            { label: 'Past Sessions', value: past.length, icon: <History size={20} />, color: 'text-slate-700', bg: 'bg-slate-100' },
+-            { label: 'Total Bookings', value: upcoming.length + past.length, icon: <TrendingUp size={20} />, color: 'text-emerald-600', bg: 'bg-emerald-100' },
+-          ].map((stat, i) => (
+-            <Card key={i} className="animate-fade-in-up border-0 shadow-lg hover:shadow-xl transition-shadow duration-300" style={{ animationDelay: `${(i + 1) * 100}ms` }}>
+-              <CardContent className="pt-6">
+-                <div className="flex items-center gap-3">
+-                  <div className={`w-10 h-10 ${stat.bg} rounded-lg flex items-center justify-center ${stat.color}`}>
+-                    {stat.icon}
+-                  </div>
+-                  <div>
+-                    <p className="text-2xl font-bold">{stat.value}</p>
+-                    <p className="text-xs text-slate-500">{stat.label}</p>
+-                  </div>
++      <main className="max-w-7xl mx-auto px-6 pt-24 space-y-8">
++        {/* Header */}
++        <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
++          <div>
++            <h1 className="font-headline text-4xl font-bold tracking-tight text-primary mb-2">Student Dashboard</h1>
++            <p className="text-on-surface-variant font-medium">You have {upcoming.length} sessions scheduled.</p>
++          </div>
++          <div className="flex gap-3">
++             <div className="flex bg-surface-container-lowest rounded-2xl p-2 gap-2 shadow-ambient border border-outline-variant/10">
++                <div className="px-4 py-2 text-center">
++                   <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Upcoming</p>
++                   <p className="text-xl font-headline font-bold text-primary">{upcoming.length}</p>
+                 </div>
+-              </CardContent>
+-            </Card>
+-          ))}
+-        </div>
++                <div className="px-4 py-2 text-center border-l border-outline-variant/10">
++                   <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Completed</p>
++                   <p className="text-xl font-headline font-bold text-primary">{past.filter(p => p.status === 'completed').length}</p>
++                </div>
++             </div>
++          </div>
++        </header>
+ 
+-        {/* Upcoming */}
+-        <h2 className="text-xl font-semibold text-slate-900 mb-4 flex items-center gap-2">
+-          <BookOpen size={20} className="text-brand-primary" />
+-          Upcoming Sessions
+-        </h2>
+-        {upcoming.length === 0 ? (
+-          <Card className="mb-10 border-dashed border-2 border-slate-200">
+-            <CardContent className="py-12 text-center">
+-              <div className="text-5xl mb-4">≡ƒôÜ</div>
+-              <p className="text-slate-500 mb-2">No upcoming sessions scheduled.</p>
+-              <Link to="/browse" className="text-brand-primary font-semibold hover:underline inline-flex items-center gap-1">
+-                Browse available sessions ΓåÆ
+-              </Link>
+-            </CardContent>
+-          </Card>
+-        ) : (
+-          <div className="space-y-4 mb-10">
+-            {upcoming.map((b) => (
+-              <Card key={b._id} className="hover:shadow-md transition-all duration-300 border-slate-200/80 hover:border-brand-primary/20">
+-                <CardContent className="py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+-                  <div className="flex-1">
+-                    <div className="flex items-center gap-3 mb-1">
+-                      <h3 className="font-semibold text-slate-900">{b.sessionId?.title || 'Session'}</h3>
+-                      <Badge variant={statusColors[b.status]}>{b.status}</Badge>
++        <div className="grid grid-cols-12 gap-8">
++          {/* Hero: Next Session (Asymmetric Bento) */}
++          <div className="col-span-12 lg:col-span-8">
++             {upcoming.length > 0 ? (() => {
++               const nextSession = upcoming[0];
++               return (
++                  <div className="relative overflow-hidden rounded-[24px_12px_24px_12px] bg-primary p-1 text-white shadow-2xl h-full flex items-center">
++                    <div className="absolute top-0 right-0 w-2/3 h-full opacity-10 overflow-hidden pointer-events-none" style={{ background: 'radial-gradient(circle, #fff 0%, transparent 70%)' }}>
+                     </div>
+-                    <div className="flex items-center gap-4 text-sm text-slate-500">
+-                      <span className="flex items-center gap-1"><Calendar size={14}/> {new Date(b.scheduledAt).toLocaleDateString()}</span>
+-                      <span className="flex items-center gap-1"><Clock size={14}/> {new Date(b.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
++                    <div className="relative z-10 p-8 lg:p-10 flex flex-col md:flex-row justify-between items-start md:items-center w-full">
++                      <div className="max-w-xl">
++                        <span className="inline-block px-3 py-1 rounded-full bg-on-primary-container/20 text-on-primary-container text-[11px] font-bold tracking-widest uppercase mb-6">Next Up</span>
++                        <h2 className="font-headline text-3xl font-bold mb-4">{nextSession.sessionId?.title || 'Session'}</h2>
++                        <div className="flex flex-wrap items-center gap-6 text-slate-300 mb-8">
++                          <div className="flex items-center gap-2">
++                            <span className="material-symbols-outlined text-sm">schedule</span>
++                            <span className="text-sm font-medium">
++                               {new Date(nextSession.scheduledAt).toLocaleDateString()} at {new Date(nextSession.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
++                            </span>
++                          </div>
++                          <div className="flex items-center gap-2">
++                            <span className="material-symbols-outlined text-sm">person</span>
++                            <span className="text-sm font-medium">Tutor: {nextSession.tutor?.name || 'Tutor'}</span>
++                          </div>
++                        </div>
++                        <div className="flex flex-wrap items-center gap-4">
++                          {nextSession.meetingLink ? (
++                              <a href={nextSession.meetingLink} target="_blank" rel="noreferrer" className="bg-on-primary-container hover:bg-on-primary-container/90 text-white px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-on-primary-container/30 text-center text-sm">
++                                Join Video Call
++                              </a>
++                           ) : (
++                              <button disabled className="bg-white/10 text-white/50 px-8 py-4 rounded-full font-bold cursor-not-allowed text-sm">
++                                Link unavailable
++                              </button>
++                           )}
++                           <button onClick={() => handleCancel(nextSession._id)} className="text-white/60 hover:text-white font-bold px-6 py-4 flex items-center gap-2 text-sm transition-colors group">
++                              Cancel Session
++                              <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
++                           </button>
++                        </div>
++                      </div>
+                     </div>
+                   </div>
+-                  <div className="flex gap-2">
+-                    <Button variant="destructive" size="sm" onClick={() => handleCancel(b._id)}>
+-                      <X size={14} className="mr-1"/> Cancel
+-                    </Button>
++               );
++             })() : (
++               <div className="h-full min-h-[300px] flex flex-col items-center justify-center text-center p-10 bg-surface-container-lowest rounded-[24px_12px_24px_12px] shadow-ambient border border-outline-variant/10">
++                  <div className="w-16 h-16 bg-surface-container rounded-2xl flex items-center justify-center mb-6 text-primary">
++                    <span className="material-symbols-outlined text-3xl">event_available</span>
+                   </div>
+-                </CardContent>
+-              </Card>
+-            ))}
++                  <h3 className="text-xl font-bold font-headline text-primary mb-2">No upcoming sessions</h3>
++                  <p className="text-on-surface-variant mb-6 text-sm max-w-sm">You are all caught up. Ready to learn something new? Browse available sessions and tutors.</p>
++                  <Link to="/browse" className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-bold shadow-md transition-colors text-sm">
++                     Browse Sessions
++                  </Link>
++               </div>
++             )}
+           </div>
+-        )}
+ 
+-        {/* Past */}
+-        <h2 className="text-xl font-semibold text-slate-900 mb-4 flex items-center gap-2">
+-          <History size={20} className="text-slate-400" />
+-          Past Sessions
+-        </h2>
+-        {past.length === 0 ? (
+-          <Card className="border-dashed border-2 border-slate-200">
+-            <CardContent className="py-12 text-center">
+-              <div className="text-5xl mb-4">≡ƒòÉ</div>
+-              <p className="text-slate-500">No past sessions yet. Book your first one!</p>
+-            </CardContent>
+-          </Card>
+-        ) : (
+-          <div className="space-y-4">
+-            {past.map((b) => (
+-              <Card key={b._id} className="border-slate-200/80">
+-                <CardContent className="py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+-                  <div className="flex-1">
+-                    <div className="flex items-center gap-3 mb-1">
+-                      <h3 className="font-semibold text-slate-900">{b.sessionId?.title || 'Session'}</h3>
+-                      <Badge variant={statusColors[b.status]}>{b.status}</Badge>
++          {/* Quick Shortcuts */}
++          <div className="col-span-12 lg:col-span-4 flex flex-col gap-6">
++             <div className="bg-surface-container-lowest p-8 rounded-3xl shadow-ambient flex-1 border border-outline-variant/5">
++                <h3 className="font-headline text-xl font-bold text-primary mb-6">Quick Links</h3>
++                <div className="space-y-3">
++                   <Link to="/browse" className="flex items-center justify-between p-4 rounded-2xl bg-surface hover:bg-surface-container-high transition-colors group">
++                      <div className="flex items-center gap-3">
++                         <div className="bg-primary/5 p-2 rounded-lg text-primary">
++                            <span className="material-symbols-outlined text-sm">search</span>
++                         </div>
++                         <span className="font-semibold text-sm text-primary">Find a Tutor</span>
++                      </div>
++                      <span className="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
++                   </Link>
++                   <Link to="/profile" className="flex items-center justify-between p-4 rounded-2xl bg-surface hover:bg-surface-container-high transition-colors group">
++                      <div className="flex items-center gap-3">
++                         <div className="bg-primary/5 p-2 rounded-lg text-primary">
++                            <span className="material-symbols-outlined text-sm">person</span>
++                         </div>
++                         <span className="font-semibold text-sm text-primary">Update Profile</span>
++                      </div>
++                      <span className="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
++                   </Link>
++                </div>
++                
++                <div className="mt-8 p-5 bg-primary-container rounded-2xl relative overflow-hidden">
++                  <div className="relative z-10">
++                  <p className="text-[10px] font-bold text-on-primary-container/80 uppercase tracking-widest mb-1">Resource</p>
++                  <h4 className="text-white font-headline font-bold text-sm mb-3">View Active Courses</h4>
++                  <Link to="/browse" className="text-xs font-bold text-white border-b border-white/40 pb-0.5 hover:border-white transition-colors">Explore Now</Link>
++                  </div>
++                  <span className="material-symbols-outlined absolute -bottom-4 -right-2 text-7xl text-white/5 rotate-12">auto_stories</span>
++                </div>
++             </div>
++          </div>
++          
++          {/* Upcoming Schedule */}
++          <div className="col-span-12 lg:col-span-6">
++            <div className="flex justify-between items-center mb-6 px-2">
++              <h3 className="font-headline text-2xl font-bold text-primary">Upcoming Schedule</h3>
++            </div>
++            <div className="space-y-4">
++              {upcoming.length > 1 ? upcoming.slice(1).map(b => {
++                const isConfirmed = b.status === 'confirmed';
++                return (
++                  <div key={b._id} className="group bg-surface-container-lowest p-5 rounded-3xl flex items-center justify-between transition-all hover:shadow-ambient hover:-translate-y-1 border border-outline-variant/10">
++                    <div className="flex items-center gap-5">
++                      <div className="w-14 h-14 rounded-2xl bg-secondary-container/30 flex flex-col items-center justify-center text-primary flex-shrink-0">
++                        <span className="text-[10px] font-bold uppercase">{new Date(b.scheduledAt).toLocaleDateString('en', { month: 'short' })}</span>
++                        <span className="text-xl font-headline font-bold">{new Date(b.scheduledAt).getDate()}</span>
++                      </div>
++                      <div>
++                        <h4 className="font-bold text-primary group-hover:text-on-primary-container transition-colors line-clamp-1">{b.sessionId?.title || 'Session'}</h4>
++                        <p className="text-xs text-slate-500 flex items-center gap-1 mt-1">
++                          <span className="material-symbols-outlined text-[14px]">schedule</span> 
++                          {new Date(b.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} ΓÇó {b.tutorId?.name || 'Tutor'}
++                        </p>
++                      </div>
+                     </div>
+-                    <div className="text-sm text-slate-500">
+-                      {new Date(b.scheduledAt).toLocaleString()}
++                    <div className="flex items-center gap-3">
++                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap hidden sm:inline-block ${
++                        isConfirmed ? 'bg-primary/5 text-primary' : 'bg-surface-container-high text-on-surface-variant'
++                      }`}>
++                        {b.status}
++                      </span>
++                      <button onClick={() => handleCancel(b._id)} className="p-2 text-outline hover:bg-error/10 hover:text-error rounded-xl transition-colors" title="Cancel Booking">
++                         <span className="material-symbols-outlined text-sm">close</span>
++                      </button>
+                     </div>
+                   </div>
+-                  <div className="flex flex-col gap-2">
+-                    <Link to="/browse">
+-                      <Button variant="outline" size="sm" className="w-full">
+-                        <RotateCcw size={14} className="mr-1"/> Rebook
+-                      </Button>
+-                    </Link>
+-                    {b.status === 'completed' && (
+-                      <Button variant="default" size="sm" className="bg-amber-500 hover:bg-amber-600 w-full" onClick={() => setReviewModal({ isOpen: true, bookingId: b._id, rating: 5, review: '' })}>
+-                        <Star size={14} className="mr-1"/> Leave Review
+-                      </Button>
+-                    )}
+-                  </div>
+-                </CardContent>
+-                
+-                {/* Review Form Expansion */}
+-                {reviewModal.isOpen && reviewModal.bookingId === b._id && (
+-                  <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+-                    <form onSubmit={handleReviewSubmit}>
+-                      <div className="mb-3">
+-                        <label className="block text-sm font-medium text-slate-700 mb-1">Rating</label>
+-                        <div className="flex gap-1">
+-                          {[1, 2, 3, 4, 5].map(star => (
+-                            <button
+-                              type="button"
+-                              key={star}
+-                              onClick={() => setReviewModal({ ...reviewModal, rating: star })}
+-                              className={`p-1 ${reviewModal.rating >= star ? 'text-amber-400' : 'text-slate-300'}`}
+-                            >
+-                              <Star size={24} fill={reviewModal.rating >= star ? 'currentColor' : 'none'} />
+-                            </button>
+-                          ))}
+-                        </div>
+-                      </div>
+-                      <div className="mb-3">
+-                        <label className="block text-sm font-medium text-slate-700 mb-1">Review</label>
+-                        <textarea
+-                          rows="3"
+-                          className="w-full border rounded-md px-3 py-2 text-sm"
+-                          placeholder="How was your session?"
+-                          value={reviewModal.review}
+-                          onChange={(e) => setReviewModal({ ...reviewModal, review: e.target.value })}
+-                        />
++                );
++              }) : (
++                <div className="p-8 text-center text-on-surface-variant bg-surface-container-lowest rounded-3xl border border-dashed border-outline-variant/30 flex flex-col items-center">
++                   <p className="text-sm font-medium">No other upcoming sessions.</p>
++                </div>
++              )}
++            </div>
++          </div>
++
++          {/* Past Sessions */}
++          <div className="col-span-12 lg:col-span-6">
++            <div className="flex justify-between items-center mb-6 px-2">
++              <h3 className="font-headline text-2xl font-bold text-primary">Past Sessions</h3>
++            </div>
++            <div className="space-y-4">
++              {past.length > 0 ? past.map(b => (
++                <div key={b._id} className="relative group bg-surface-container-lowest p-5 rounded-3xl flex flex-col transition-all hover:shadow-ambient border border-outline-variant/10">
++                  <div className="flex items-center justify-between mb-4">
++                    <div className="flex items-center gap-4">
++                      <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-on-surface-variant flex-shrink-0">
++                         <span className="material-symbols-outlined text-sm">history</span>
+                       </div>
+-                      <div className="flex gap-2 justify-end">
+-                        <Button type="button" variant="outline" size="sm" onClick={() => setReviewModal({ ...reviewModal, isOpen: false })}>Cancel</Button>
+-                        <Button type="submit" size="sm" className="bg-amber-500 hover:bg-amber-600 text-white">Submit Review</Button>
++                      <div>
++                        <h4 className="font-bold text-primary text-sm line-clamp-1">{b.sessionId?.title || 'Session'}</h4>
++                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">{new Date(b.scheduledAt).toLocaleDateString()}</p>
+                       </div>
+-                    </form>
++                    </div>
++                    <span className="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant text-[10px] font-bold uppercase tracking-wider">
++                      {b.status}
++                    </span>
++                  </div>
++                  
++                  <div className="flex items-center gap-2 pt-4 border-t border-outline-variant/10">
++                     <Link to="/browse" className="flex-1 text-center py-2 bg-surface hover:bg-surface-container-high text-xs font-bold rounded-xl transition-colors text-primary">
++                        Rebook
++                     </Link>
++                     {b.status === 'completed' && (
++                        <button 
++                          onClick={() => setReviewModal({ isOpen: true, bookingId: b._id, rating: 5, review: '' })} 
++                          className="flex-1 text-center py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-1"
++                        >
++                          <span className="material-symbols-outlined text-[14px]">star</span>
++                          Review
++                        </button>
++                     )}
+                   </div>
+-                )}
+-              </Card>
+-            ))}
++                  
++                  {/* Review Modals Inline */}
++                  {reviewModal.isOpen && reviewModal.bookingId === b._id && (
++                    <div className="mt-4 p-4 bg-surface rounded-2xl border border-outline-variant/10 animate-fade-in-up">
++                      <form onSubmit={handleReviewSubmit}>
++                        <div className="mb-4">
++                          <label className="block text-xs font-bold text-primary mb-2">Your Rating</label>
++                          <div className="flex gap-1">
++                            {[1, 2, 3, 4, 5].map(star => (
++                              <button
++                                type="button"
++                                key={star}
++                                onClick={() => setReviewModal({ ...reviewModal, rating: star })}
++                                className={`p-1 transition-transform hover:scale-110 ${reviewModal.rating >= star ? 'text-amber-500' : 'text-slate-200'}`}
++                              >
++                                <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
++                              </button>
++                            ))}
++                          </div>
++                        </div>
++                        <div className="mb-4">
++                          <label className="block text-xs font-bold text-primary mb-2">Feedback</label>
++                          <textarea
++                            rows="2"
++                            className="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-xl px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-outline/50"
++                            placeholder="Share your experience..."
++                            value={reviewModal.review}
++                            onChange={(e) => setReviewModal({ ...reviewModal, review: e.target.value })}
++                          />
++                        </div>
++                        <div className="flex gap-2 justify-end">
++                          <button type="button" onClick={() => setReviewModal({ ...reviewModal, isOpen: false })} className="px-4 py-2 text-xs font-bold text-on-surface-variant hover:bg-surface-container rounded-xl transition-colors">Cancel</button>
++                          <button type="submit" className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary/90 transition-colors">Submit</button>
++                        </div>
++                      </form>
++                    </div>
++                  )}
++                </div>
++              )) : (
++                <div className="p-8 text-center text-on-surface-variant bg-surface-container-lowest rounded-3xl border border-dashed border-outline-variant/30 flex flex-col items-center">
++                   <p className="text-sm font-medium">No past sessions yet.</p>
++                </div>
++              )}
++            </div>
+           </div>
+-        )}
+-      </div>
++          
++        </div>
++      </main>
+     </div>
+   );
+ }

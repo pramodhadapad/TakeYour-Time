@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Take Your Time | Premium Booking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary": "#000928",
+                        "inverse-primary": "#b4c5ff",
+                        "on-tertiary-fixed-variant": "#633e1e",
+                        "secondary": "#5b598c",
+                        "on-tertiary-fixed": "#2e1500",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-fixed-variant": "#444173",
+                        "outline-variant": "#c8c5d0",
+                        "tertiary-container": "#371a00",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-fixed": "#ffdcc2",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#c7c3fe",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary": "#160700",
+                        "on-surface": "#191c1e",
+                        "on-tertiary-container": "#ae7f59",
+                        "surface-tint": "#0053db",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#dbe1ff",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-fixed": "#181445",
+                        "surface": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#47464f",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-background": "#191c1e",
+                        "on-secondary-container": "#514f81",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#f1bc91",
+                        "surface-dim": "#d8dadc",
+                        "background": "#f7f9fb",
+                        "outline": "#787680",
+                        "surface-container": "#eceef0",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "secondary-fixed": "#e3dfff",
+                        "primary-container": "#001d58",
+                        "on-primary-container": "#5382ff",
+                        "on-primary-fixed": "#00174b",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-fixed-dim": "#c4c1fb",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Epilogue"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-sidebar {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .custom-calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary-container selection:text-white">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl border-b border-indigo-500/10 shadow-sm flex justify-between items-center px-8 py-4 max-w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-indigo-950 font-headline">Take Your Time</span>
+<div class="hidden md:flex gap-6">
+<a class="text-indigo-600 border-b-2 border-indigo-600 font-headline tracking-tight font-semibold" href="#">Find Tutors</a>
+<a class="text-slate-600 hover:text-indigo-600 transition-colors duration-300 font-headline tracking-tight font-semibold" href="#">How it Works</a>
+<a class="text-slate-600 hover:text-indigo-600 transition-colors duration-300 font-headline tracking-tight font-semibold" href="#">Pricing</a>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<button class="text-slate-600 font-medium hover:text-indigo-600 transition-all">Sign In</button>
+<button class="bg-primary-container text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:opacity-90 active:scale-95 transition-all">Join as Tutor</button>
+</div>
+</nav>
+<main class="pt-24 pb-20 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Profile & Scheduling -->
+<div class="lg:col-span-8 space-y-12">
+<!-- Elegant Profile Header -->
+<section class="flex flex-col md:flex-row gap-8 items-start md:items-center">
+<div class="relative">
+<div class="w-32 h-32 rounded-[2rem] overflow-hidden rotate-3 shadow-xl">
+<img class="w-full h-full object-cover -rotate-3 scale-110" data-alt="Professional woman with warm smile in a minimalist studio setting, high-end editorial lighting and soft depth of field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGNAW0cQbTOAZOGHF9TLB0KDm70fxGVbHCtfTBPviEnLcg536XmSqUfXm5Gl64RUDAF6_NG3n77ppStuCMcYRnEEn_sQ3Es2-BjFUUnVDn-WR1VB3f3MCjc7O4F4iu36Y1-n04kLhlDuoSH4E2jLPbnZs7U9jLomo0OgeYB0idLht8YwCnGk2lwfnaFV_-u12g-3BNyMVpiZai_XqT7JjNG9440POSNOqkjCSHzNgW8TTEarUZF9oXR5lEroBolv8G0Wvy-cZzrTw"/>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-on-primary-container text-white p-1.5 rounded-full shadow-lg border-4 border-surface">
+<span class="material-symbols-outlined text-sm block" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<h1 class="text-4xl font-headline font-bold tracking-tight text-primary">Dr. Elena Thorne</h1>
+<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-xs font-bold rounded-full tracking-wider uppercase">Strategic Mentor</span>
+</div>
+<p class="text-on-surface-variant max-w-lg leading-relaxed">Helping founders scale from seed to Series B with intentionality. Specialized in organizational design and executive leadership.</p>
+<div class="flex items-center gap-4 pt-2">
+<div class="flex items-center gap-1 text-on-tertiary-container">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold">4.9</span>
+<span class="text-sm opacity-70">(128 reviews)</span>
+</div>
+<div class="h-1 w-1 bg-outline-variant rounded-full"></div>
+<div class="flex items-center gap-1 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-lg">location_on</span>
+<span>London, UK / Remote</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Sophisticated Calendar Interaction -->
+<section class="bg-surface-container-lowest rounded-3xl p-8 shadow-sm">
+<div class="flex justify-between items-center mb-8">
+<h2 class="text-2xl font-headline font-semibold text-primary">Select your session</h2>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="space-y-8">
+<!-- Calendar Header -->
+<div class="custom-calendar-grid text-center text-xs font-bold text-outline uppercase tracking-widest pb-4 border-b border-outline-variant/10">
+<div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+</div>
+<!-- Calendar Days -->
+<div class="custom-calendar-grid gap-y-4">
+<div class="flex flex-col items-center opacity-30 text-outline"><span>28</span></div>
+<div class="flex flex-col items-center opacity-30 text-outline"><span>29</span></div>
+<div class="flex flex-col items-center opacity-30 text-outline"><span>30</span></div>
+<div class="flex flex-col items-center opacity-30 text-outline"><span>31</span></div>
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">01</span>
+<span class="w-1.5 h-1.5 bg-primary-container rounded-full opacity-0 group-hover:opacity-100 mt-1"></span>
+</button>
+<button class="group flex flex-col items-center p-3 rounded-2xl bg-primary text-white shadow-xl scale-110">
+<span class="text-lg font-bold">02</span>
+<span class="w-1.5 h-1.5 bg-white rounded-full mt-1"></span>
+</button>
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">03</span>
+<span class="w-1.5 h-1.5 bg-primary-container rounded-full opacity-0 group-hover:opacity-100 mt-1"></span>
+</button>
+<!-- Row 2 -->
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">04</span>
+</button>
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">05</span>
+</button>
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">06</span>
+</button>
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">07</span>
+</button>
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">08</span>
+</button>
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">09</span>
+</button>
+<button class="group flex flex-col items-center p-3 rounded-2xl hover:bg-surface-container-high transition-all">
+<span class="text-lg font-medium">10</span>
+</button>
+</div>
+<!-- Time Slots -->
+<div class="pt-8 border-t border-outline-variant/20">
+<h3 class="text-sm font-bold text-outline uppercase tracking-widest mb-6">Available Times</h3>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<button class="py-3 px-4 rounded-xl border border-outline-variant hover:border-primary hover:text-primary transition-all text-center text-sm font-medium">09:00 AM</button>
+<button class="py-3 px-4 rounded-xl bg-on-primary-container text-white shadow-md text-center text-sm font-medium">10:30 AM</button>
+<button class="py-3 px-4 rounded-xl border border-outline-variant hover:border-primary hover:text-primary transition-all text-center text-sm font-medium">01:00 PM</button>
+<button class="py-3 px-4 rounded-xl border border-outline-variant hover:border-primary hover:text-primary transition-all text-center text-sm font-medium">03:30 PM</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Booking Summary Sidebar -->
+<aside class="lg:col-span-4 lg:sticky lg:top-28 h-fit">
+<div class="glass-sidebar rounded-3xl p-8 border border-white/40 shadow-2xl space-y-8 relative overflow-hidden">
+<!-- Abstract Accent Background -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary-container/5 rounded-full blur-3xl -z-10"></div>
+<div>
+<h3 class="text-2xl font-headline font-bold text-primary mb-1">Booking Summary</h3>
+<p class="text-on-surface-variant text-sm">A meticulously crafted 60-minute strategy session.</p>
+</div>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="bg-primary/5 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">event</span>
+</div>
+<div>
+<p class="text-xs font-bold text-outline uppercase tracking-tight">Date &amp; Time</p>
+<p class="text-on-surface font-semibold">Saturday, Nov 02</p>
+<p class="text-on-surface-variant text-sm">10:30 AM — 11:30 AM GMT</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-primary/5 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">videocam</span>
+</div>
+<div>
+<p class="text-xs font-bold text-outline uppercase tracking-tight">Location</p>
+<p class="text-on-surface font-semibold">Digital Workspace</p>
+<p class="text-on-surface-variant text-sm">Via secure high-definition link</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-primary/5 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="text-xs font-bold text-outline uppercase tracking-tight">Investment</p>
+<p class="text-on-surface font-semibold">$350.00 <span class="text-sm font-normal text-on-surface-variant">/ hour</span></p>
+<p class="text-on-surface-variant text-xs italic">Inclusive of all prep-work materials</p>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/30">
+<div class="flex justify-between items-center mb-6">
+<span class="text-lg font-headline font-bold">Total Investment</span>
+<span class="text-2xl font-headline font-bold text-primary">$350.00</span>
+</div>
+<button class="w-full bg-primary-container text-white py-5 rounded-[1.5rem] font-bold text-lg shadow-2xl hover:shadow-primary-container/20 hover:-translate-y-0.5 active:translate-y-0 transition-all flex justify-center items-center gap-2">
+<span>Confirm Reservation</span>
+<span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+<p class="text-center text-[10px] text-outline mt-6 uppercase tracking-widest">Secure encrypted checkout by Take Your Time</p>
+</div>
+</div>
+<!-- Trust Badges -->
+<div class="mt-8 px-4 flex justify-between opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
+<span class="material-symbols-outlined text-4xl">verified_user</span>
+<span class="material-symbols-outlined text-4xl">encrypted</span>
+<span class="material-symbols-outlined text-4xl">support_agent</span>
+<span class="material-symbols-outlined text-4xl">workspace_premium</span>
+</div>
+</aside>
+</main>
+<footer class="bg-indigo-950 text-slate-200 font-['Inter'] text-sm leading-relaxed w-full relative bottom-0">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 px-12 py-20 w-full max-w-7xl mx-auto">
+<div class="col-span-2">
+<span class="text-2xl font-['Epilogue'] font-bold text-white mb-6 block">Take Your Time</span>
+<p class="max-w-xs text-slate-400 mb-8 leading-relaxed">The world's most curated platform for elite-level mentorship and specialized skill acquisition.</p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-white font-semibold uppercase tracking-widest text-xs mb-2">Company</h4>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">About Us</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Careers</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Support</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-white font-semibold uppercase tracking-widest text-xs mb-2">Legal</h4>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Cookie Policy</a>
+</div>
+</div>
+<div class="px-12 py-8 border-t border-white/5 text-center text-slate-500 text-xs">
+            © 2024 Take Your Time. Handcrafted for excellence.
+        </div>
+</footer>
+</body></html>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import { Button } from '../components/ui/button';
 
@@ -7,10 +7,18 @@ const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user } = useAuthStore();
 
   useEffect(() => {
     if (user && user.role) {
+      const from = sessionStorage.getItem('redirectAfterLogin');
+      if (from) {
+        sessionStorage.removeItem('redirectAfterLogin');
+        navigate(from, { replace: true });
+        return;
+      }
+
       const dashboardMap = {
         tutor: '/tutor/dashboard',
         student: '/student/dashboard',
@@ -21,6 +29,10 @@ export default function Login() {
   }, [user, navigate]);
 
   const handleGoogleLogin = () => {
+    const from = searchParams.get('from');
+    if (from) {
+      sessionStorage.setItem('redirectAfterLogin', from);
+    }
     window.location.href = `${API}/api/auth/google`;
   };
 

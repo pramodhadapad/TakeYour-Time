@@ -1,0 +1,6 @@
+﻿A	README.md
+M	client/src/pages/Login.jsx
+A	client/vercel.json
+M	server/src/config/passport.js
+M	server/src/services/BookingService.js
+A	server/src/services/emailTemplates.js
